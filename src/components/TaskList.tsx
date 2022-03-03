@@ -28,11 +28,15 @@ export default function TaskList({ tasks, onChangeStatus, onEdit, onDelete }: Ta
     setIdToEdit('');
   }
 
+  function handleCancel() {
+    setIdToEdit('');
+  }
+
   return (
     <ul>
       {tasks.map((task) => {
         const { id, title } = task;
-        return idToEdit === id ? <EditTask key={id} onEdit={(title) => handleEdit(id, title)} value={title} />:
+        return idToEdit === id ? <EditTask key={id} onEdit={(title) => handleEdit(id, title)} value={title} onCancel={handleCancel} />:
           <TaskItem key={id} task={task} onChangeStatus={onChangeStatus} onShowEdit={handleShowEdit} onDelete={onDelete} />
       })}
     </ul>

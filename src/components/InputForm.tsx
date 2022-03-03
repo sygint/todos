@@ -5,9 +5,11 @@ type InputFormProps = {
   buttonText: string;
   placeholder: string;
   value?: string | undefined;
+  hasCancel?: boolean;
+  onCancel?: () => void;
 }
 
-export default function InputForm({ onSubmit, buttonText, placeholder, value }: InputFormProps) {
+export default function InputForm({ onSubmit, buttonText, placeholder, value, hasCancel, onCancel }: InputFormProps) {
   const [data, setData] = useState<string>(value || '');
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -27,6 +29,7 @@ export default function InputForm({ onSubmit, buttonText, placeholder, value }: 
         value={data}
       />
       <button>{buttonText}</button>
+      {hasCancel && <button type="button" onClick={onCancel}>cancel</button>}
     </form>
   )
 }
