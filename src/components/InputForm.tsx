@@ -7,17 +7,23 @@ type InputFormProps = {
   value?: string | undefined;
   hasCancel?: boolean;
   onCancel?: () => void;
-}
+};
 
-export default function InputForm({ onSubmit, buttonText, placeholder, value, hasCancel, onCancel }: InputFormProps) {
-  const [data, setData] = useState<string>(value || '');
+export default function InputForm({
+  onSubmit,
+  buttonText,
+  placeholder,
+  value,
+  hasCancel,
+  onCancel,
+}: InputFormProps) {
+  const [data, setData] = useState<string>(value || "");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
 
     onSubmit(data);
-    setData('');
-
+    setData("");
   }
   return (
     <form className="center-all" onSubmit={handleSubmit}>
@@ -29,7 +35,11 @@ export default function InputForm({ onSubmit, buttonText, placeholder, value, ha
         value={data}
       />
       <button>{buttonText}</button>
-      {hasCancel && <button type="button" onClick={onCancel}>cancel</button>}
+      {hasCancel && (
+        <button type="button" onClick={onCancel}>
+          cancel
+        </button>
+      )}
     </form>
-  )
+  );
 }
