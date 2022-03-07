@@ -1,16 +1,15 @@
 import { useState } from "react";
 
-import EditTask from "./EditTask";
-import TaskItem from "./TaskItem";
+import { EditTask, Task } from "../";
 
-export type Task = {
+export type TTask = {
   id: string;
   title: string;
   isCompleted: boolean;
 };
 
-type TaskProps = {
-  tasks: Task[];
+type TTaskList = {
+  tasks: TTask[];
   onChangeStatus: (id: string, isCompleted: boolean) => void;
   onEdit: (id: string, title: string) => void;
   onDelete: (id: string) => void;
@@ -21,7 +20,7 @@ export default function TaskList({
   onChangeStatus,
   onEdit,
   onDelete,
-}: TaskProps) {
+}: TTaskList) {
   const [idToEdit, setIdToEdit] = useState<string>("");
 
   function handleShowEdit(id: string) {
@@ -39,8 +38,9 @@ export default function TaskList({
 
   return (
     <ul>
-      {tasks.map((task) => {
+      {tasks.map((task: TTask) => {
         const { id, title } = task;
+
         return idToEdit === id ? (
           <EditTask
             key={id}
@@ -49,13 +49,15 @@ export default function TaskList({
             onCancel={handleCancel}
           />
         ) : (
-          <TaskItem
-            key={id}
-            task={task}
-            onChangeStatus={onChangeStatus}
-            onShowEdit={handleShowEdit}
-            onDelete={onDelete}
-          />
+          <li key={id}>
+            <Task
+              key={id}
+              task={task}
+              onChangeStatus={onChangeStatus}
+              onShowEdit={handleShowEdit}
+              onDelete={onDelete}
+            />
+          </li>
         );
       })}
     </ul>

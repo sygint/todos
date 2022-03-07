@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 
-import AddTask from "./AddTask";
-import TaskList, { Task } from "./TaskList";
+import { Container, AddTask, TaskList } from "../";
 
-import "./App.css";
+const getIds = ({ id }: { id: string }) => id;
 
-const getIds = ({ id }: Task) => id;
+export type Task = {
+  id: string;
+  title: string;
+  isCompleted: boolean;
+};
 
 export default function App() {
   function handleAdd(title: string) {
@@ -29,11 +32,13 @@ export default function App() {
 
     setTasks(newTasks);
   }
+
   function handleChangeStatus(id: string, isCompleted: boolean) {
     const { title } = tasks.find((t) => t.id === id) as Task;
 
     localStorage.setItem(id, JSON.stringify({ title, isCompleted }));
   }
+
   function handleEdit(id: string, title: string) {
     const newTasks = tasks.map((t) => (t.id === id ? { ...t, title } : t));
     const task = newTasks.find((t) => t.id === id);
@@ -42,6 +47,7 @@ export default function App() {
 
     localStorage.setItem(id, JSON.stringify(task));
   }
+
   function handleDelete(id: string) {
     const newTasks = tasks.filter((t) => t.id !== id);
     const newTaskIds = newTasks.map(getIds);
@@ -74,7 +80,7 @@ export default function App() {
   }, []);
 
   return (
-    <>
+    <Container>
       <AddTask onAdd={handleAdd} />
       {tasks.length ? (
         <TaskList
@@ -86,6 +92,6 @@ export default function App() {
       ) : (
         "No tasks, add some"
       )}
-    </>
+    </Container>
   );
 }

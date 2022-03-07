@@ -1,21 +1,21 @@
-import InputForm from "./InputForm";
+import { InputForm } from "../";
 
-type EditTaskProps = {
+type TEditTask = {
   onEdit: (data: string) => void;
   value?: string | undefined;
   onCancel: () => void;
 };
 
 export default function EditTask({
-  onEdit: onEdit,
+  onEdit,
   value,
   onCancel,
-}: EditTaskProps) {
+}: TEditTask) {
   return (
     <InputForm
       onSubmit={onEdit}
       buttonText="save"
-      placeholder="edit a task"
+      label="Edit a task"
       value={value}
       hasCancel={true}
       onCancel={onCancel}

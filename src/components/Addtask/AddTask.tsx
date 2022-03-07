@@ -1,4 +1,4 @@
-import InputForm from "./InputForm";
+import { InputForm } from "../";
 
 type AddTaskProps = {
   onAdd: (data: string) => void;
@@ -9,8 +9,9 @@ export default function AddTask({ onAdd, value }: AddTaskProps) {
   return (
     <InputForm
       onSubmit={onAdd}
-      buttonText="add task"
-      placeholder="enter a task"
+      buttonText="Add"
+      label="Add a task"
+      placeholder="Buy milk"
       value={value}
     />
   );

@@ -1,9 +1,12 @@
-import { FormEvent, useState } from "react";
+import { useState, FormEvent, ChangeEvent } from "react";
 
-type InputFormProps = {
+import { Button, TextField, Form } from "../..";
+
+type TInputForm = {
   onSubmit: (data: string) => void;
   buttonText: string;
-  placeholder: string;
+  label: string;
+  placeholder?: string;
   value?: string | undefined;
   hasCancel?: boolean;
   onCancel?: () => void;
@@ -12,11 +15,12 @@ type InputFormProps = {
 export default function InputForm({
   onSubmit,
   buttonText,
+  label,
   placeholder,
   value,
   hasCancel,
   onCancel,
-}: InputFormProps) {
+}: TInputForm) {
   const [data, setData] = useState<string>(value || "");
 
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
@@ -25,21 +29,22 @@ export default function InputForm({
     onSubmit(data);
     setData("");
   }
+
   return (
-    <form className="center-all" onSubmit={handleSubmit}>
-      <input
-        type="text"
-        name="input"
+    <Form onSubmit={handleSubmit} hasCancel={hasCancel}>
+      <TextField
+        id="input"
+        label={label}
         placeholder={placeholder}
-        onChange={(e) => setData(e.target.value)}
         value={data}
+        onChange={(e: ChangeEvent<HTMLInputElement>) => setData(e.target.value)}
       />
-      <button>{buttonText}</button>
+      <Button>{buttonText}</Button>
       {hasCancel && (
-        <button type="button" onClick={onCancel}>
+        <Button type="button" onClick={onCancel}>
           cancel
-        </button>
+        </Button>
       )}
-    </form>
+    </Form>
   );
 }
