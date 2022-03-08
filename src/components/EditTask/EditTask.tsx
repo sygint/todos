@@ -6,11 +6,7 @@ type TEditTask = {
   onCancel: () => void;
 };
 
-export default function EditTask({
-  onEdit,
-  value,
-  onCancel,
-}: TEditTask) {
+export default function EditTask({ onEdit, value, onCancel }: TEditTask) {
   return (
     <InputForm
       onSubmit={onEdit}

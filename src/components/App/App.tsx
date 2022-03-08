@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 
-import { Container, AddTask, TaskList } from "../";
+import { Container, AddTask, TaskList, NoTasks } from "../";
 
 const getIds = ({ id }: { id: string }) => id;
 
@@ -90,7 +90,7 @@ export default function App() {
           onDelete={handleDelete}
         />
       ) : (
-        "No tasks, add some"
+        <NoTasks />
       )}
     </Container>
   );

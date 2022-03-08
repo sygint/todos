@@ -26,6 +26,7 @@ export default function TextField({
         placeholder={placeholder}
         value={value}
         onChange={onChange}
+        className="input"
       />
     </>
   );

@@ -1,3 +1,5 @@
+import styled from "styled-components";
+
 import { InputForm } from "../";
 
 type AddTaskProps = {
@@ -5,14 +7,20 @@ type AddTaskProps = {
   value?: string | undefined;
 };
 
+const AddTaskWrapper = styled.div`
+  padding: 1rem;
+`;
+
 export default function AddTask({ onAdd, value }: AddTaskProps) {
   return (
-    <InputForm
-      onSubmit={onAdd}
-      buttonText="Add"
-      label="Add a task"
-      placeholder="Buy milk"
-      value={value}
-    />
+    <AddTaskWrapper>
+      <InputForm
+        onSubmit={onAdd}
+        buttonText="Add"
+        label="Add a task"
+        placeholder="Buy milk"
+        value={value}
+      />
+    </AddTaskWrapper>
   );
 }

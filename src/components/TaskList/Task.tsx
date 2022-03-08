@@ -1,4 +1,5 @@
-import { Checkbox, Button } from "../";
+import { Checkbox, Button } from "..";
+import { STask } from "./styles";
 
 type TTask = {
   id: string;
@@ -26,10 +27,14 @@ export default function Task({
   const { id, title, isCompleted } = task;
 
   return (
-    <>
+    <STask>
       <Checkbox label={title} isChecked={isCompleted} onChange={handleChange} />
-      <Button onClick={() => onShowEdit(id)}>Edit</Button>
-      <Button onClick={() => onDelete(id)}>Delete</Button>
-    </>
+      <Button className="button" onClick={() => onShowEdit(id)}>
+        Edit
+      </Button>
+      <Button className="button is-danger" onClick={() => onDelete(id)}>
+        Delete
+      </Button>
+    </STask>
   );
 }

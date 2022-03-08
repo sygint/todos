@@ -13,15 +13,20 @@ export default function Checkbox({
   onChange,
 }: TCheckbox) {
   return (
-    <Label>
+    <>
       <SCheckbox
         type="checkbox"
+        id="task-check"
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           onChange(event.target.checked)
         }
         defaultChecked={isChecked}
+        className="checkbox"
       />
-      {label}
-    </Label>
+      <Label className="checkbox" htmlFor="task-check" data-content={label}>
+        {" "}
+        {label}
+      </Label>
+    </>
   );
 }

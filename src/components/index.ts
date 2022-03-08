@@ -7,7 +7,8 @@ import Checkbox from "./shared/Checkbox/Checkbox";
 import AddTask from "./Addtask/AddTask";
 import EditTask from "./EditTask/EditTask";
 import TaskList from "./TaskList/TaskList";
-import Task from "./Task/Task";
+import Task from "./TaskList/Task";
+import NoTasks from "./TaskList/NoTasks";
 import App from "./App/App";
 
 export {
@@ -21,5 +22,6 @@ export {
   EditTask,
   TaskList,
   Task,
+  NoTasks,
   App,
 };

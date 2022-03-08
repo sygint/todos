@@ -39,9 +39,9 @@ export default function InputForm({
         value={data}
         onChange={(e: ChangeEvent<HTMLInputElement>) => setData(e.target.value)}
       />
-      <Button>{buttonText}</Button>
+      <Button className="button is-primary">{buttonText}</Button>
       {hasCancel && (
-        <Button type="button" onClick={onCancel}>
+        <Button className="button" type="button" onClick={onCancel}>
           cancel
         </Button>
       )}

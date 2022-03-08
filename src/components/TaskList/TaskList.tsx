@@ -1,6 +1,7 @@
 import { useState } from "react";
 
 import { EditTask, Task } from "../";
+import { TaskList as STaskList, TaskListItem } from "./styles";
 
 export type TTask = {
   id: string;
@@ -37,29 +38,31 @@ export default function TaskList({
   }
 
   return (
-    <ul>
+    <STaskList>
       {tasks.map((task: TTask) => {
         const { id, title } = task;
 
-        return idToEdit === id ? (
-          <EditTask
-            key={id}
-            onEdit={(title) => handleEdit(id, title)}
-            value={title}
-            onCancel={handleCancel}
-          />
-        ) : (
-          <li key={id}>
-            <Task
-              key={id}
-              task={task}
-              onChangeStatus={onChangeStatus}
-              onShowEdit={handleShowEdit}
-              onDelete={onDelete}
-            />
-          </li>
+        return (
+          <TaskListItem key={id}>
+            {idToEdit === id ? (
+              <EditTask
+                key={id}
+                onEdit={(title) => handleEdit(id, title)}
+                value={title}
+                onCancel={handleCancel}
+              />
+            ) : (
+              <Task
+                key={id}
+                task={task}
+                onChangeStatus={onChangeStatus}
+                onShowEdit={handleShowEdit}
+                onDelete={onDelete}
+              />
+            )}
+          </TaskListItem>
         );
       })}
-    </ul>
+    </STaskList>
   );
 }
