@@ -34,9 +34,23 @@ export default function App() {
   }
 
   function handleChangeStatus(id: string, isCompleted: boolean) {
-    const { title } = tasks.find((t) => t.id === id) as Task;
+    let task;
 
-    localStorage.setItem(id, JSON.stringify({ title, isCompleted }));
+    const newTasks = tasks.map((t) => {
+      if (t.id === id) {
+        const { title } = t;
+
+        task = t;
+
+        localStorage.setItem(id, JSON.stringify({ title, isCompleted }));
+
+        return { ...t, isCompleted };
+      }
+
+      return t;
+    });
+
+    setTasks(newTasks);
   }
 
   function handleEdit(id: string, title: string) {

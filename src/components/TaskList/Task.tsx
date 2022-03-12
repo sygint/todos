@@ -28,7 +28,7 @@ export default function Task({
 
   return (
     <TaskContainer>
-      <Checkbox label={title} isChecked={isCompleted} onChange={handleChange} />
+      <Checkbox id={id} label={title} isChecked={isCompleted} onChange={handleChange} />
       <Button className="button" onClick={() => onShowEdit(id)}>
         Edit
       </Button>
