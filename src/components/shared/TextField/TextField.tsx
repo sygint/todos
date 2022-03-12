@@ -1,7 +1,7 @@
 import { ChangeEvent } from "react";
 import { Label, Input } from "../atoms";
 
-type TTextField = {
+type TextFieldProps = {
   label: string;
   placeholder?: string;
   id: string;
@@ -15,7 +15,7 @@ export default function TextField({
   placeholder,
   value,
   onChange,
-}: TTextField) {
+}: TextFieldProps) {
   return (
     <>
       <Label htmlFor={id} srOnly={true}>

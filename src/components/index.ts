@@ -2,7 +2,7 @@
 import { Container, Button, Form } from "./shared/atoms";
 import InputForm from "./shared/InputForm/InputForm";
 import TextField from "./shared/TextField/TextField";
-import Checkbox from "./shared/Checkbox/Checkbox";
+import CheckboxField from "./shared/Checkbox/CheckboxField";
 
 import AddTask from "./Addtask/AddTask";
 import EditTask from "./EditTask/EditTask";
@@ -14,7 +14,7 @@ import App from "./App/App";
 export {
   Container,
   Button,
-  Checkbox,
+  CheckboxField,
   Form,
   InputForm,
   TextField,

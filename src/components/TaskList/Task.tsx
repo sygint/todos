@@ -1,4 +1,4 @@
-import { Checkbox, Button } from "..";
+import { CheckboxField, Button } from "..";
 import { TaskContainer } from "./styles";
 
 type TaskObject = {
@@ -28,7 +28,7 @@ export default function Task({
 
   return (
     <TaskContainer>
-      <Checkbox id={id} label={title} isChecked={isCompleted} onChange={handleChange} />
+      <CheckboxField id={id} label={title} isChecked={isCompleted} onChange={handleChange} />
       <Button className="button" onClick={() => onShowEdit(id)}>
         Edit
       </Button>
