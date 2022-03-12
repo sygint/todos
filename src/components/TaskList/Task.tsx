@@ -7,7 +7,7 @@ type TTask = {
   isCompleted: boolean;
 };
 
-type TaskItemProps = {
+type TTTask = {
   task: TTask;
   onChangeStatus: (id: string, isChecked: boolean) => void;
   onShowEdit: (id: string) => void;
@@ -19,7 +19,7 @@ export default function Task({
   onChangeStatus,
   onShowEdit,
   onDelete,
-}: TaskItemProps) {
+}: TTTask) {
   function handleChange(isChecked: boolean) {
     onChangeStatus(id, isChecked);
   }
