@@ -3,6 +3,8 @@ import { useState } from "react";
 import { EditTask, Task } from "../";
 import { TaskListContainer, TaskListItem } from "./styles";
 
+import { ReactComponent  as ToDoContainer } from "../../assets/todo-container.svg";
+import { ReactComponent as ToDoCheckbox } from "../../assets/todo-checkbox.svg";
 
 export type TaskObject = {
   id: string;
@@ -40,6 +42,7 @@ export default function TaskList({
 
   return (
     <TaskListContainer>
+      <ToDoContainer />
       {tasks.map((task: TaskObject) => {
         const { id, title } = task;
 
@@ -59,6 +62,7 @@ export default function TaskList({
                 onChangeStatus={onChangeStatus}
                 onShowEdit={handleShowEdit}
                 onDelete={onDelete}
+                checkbox={() => <ToDoCheckbox />}
               />
             )}
           </TaskListItem>

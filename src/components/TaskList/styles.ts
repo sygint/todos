@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
 export const TaskContainer = styled.div`
+  position: relative;
   display: grid;
-  grid-template-columns: 1.5rem auto 5rem 5rem;
+  grid-template-columns: auto 5rem 5rem;
   gap: 1rem;
   align-items: center;
 `;

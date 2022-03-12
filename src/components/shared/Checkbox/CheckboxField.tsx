@@ -6,6 +6,7 @@ type CheckboxFieldProps = {
   id: string;
   label: string;
   isChecked: boolean;
+  checkbox?: () => ReactNode;
   onChange: (isChecked: boolean) => void;
 };
 
@@ -13,6 +14,7 @@ export default function CheckboxField({
   id,
   label,
   isChecked = false,
+  checkbox,
   onChange,
 }: CheckboxFieldProps) {
   return (
@@ -27,8 +29,9 @@ export default function CheckboxField({
           defaultChecked={isChecked}
           className="todo__state"
         />
+        {checkbox && checkbox()}
         {" "}
-        <div className="">{label}</div>
+        <div className="todo__text">{label}</div>
       </Label>
     </>
   );
