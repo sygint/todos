@@ -1,13 +1,13 @@
 import styled from "styled-components";
 
-export const STask = styled.div`
+export const TaskContainer = styled.div`
   display: grid;
   grid-template-columns: 1.5rem auto 5rem 5rem;
   gap: 1rem;
   align-items: center;
 `;
 
-export const TaskList = styled.ul`
+export const TaskListContainer = styled.ul`
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 `;
@@ -20,7 +20,7 @@ export const TaskListItem = styled.li`
   }
 `;
 
-export const NoTasks = styled.div`
+export const NoTasksContainer = styled.div`
   margin: 2rem 0;
   text-align: center;
 `;

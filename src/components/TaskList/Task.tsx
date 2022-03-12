@@ -1,14 +1,14 @@
 import { Checkbox, Button } from "..";
-import { STask } from "./styles";
+import { TaskContainer } from "./styles";
 
-type TTask = {
+type TaskObject = {
   id: string;
   title: string;
   isCompleted: boolean;
 };
 
-type TTTask = {
-  task: TTask;
+type TaskProps = {
+  task: TaskObject;
   onChangeStatus: (id: string, isChecked: boolean) => void;
   onShowEdit: (id: string) => void;
   onDelete: (id: string) => void;
@@ -19,7 +19,7 @@ export default function Task({
   onChangeStatus,
   onShowEdit,
   onDelete,
-}: TTTask) {
+}: TaskProps) {
   function handleChange(isChecked: boolean) {
     onChangeStatus(id, isChecked);
   }
@@ -27,7 +27,7 @@ export default function Task({
   const { id, title, isCompleted } = task;
 
   return (
-    <STask>
+    <TaskContainer>
       <Checkbox label={title} isChecked={isCompleted} onChange={handleChange} />
       <Button className="button" onClick={() => onShowEdit(id)}>
         Edit
@@ -35,6 +35,6 @@ export default function Task({
       <Button className="button is-danger" onClick={() => onDelete(id)}>
         Delete
       </Button>
-    </STask>
+    </TaskContainer>
   );
 }

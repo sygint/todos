@@ -1,16 +1,17 @@
 import { useState } from "react";
 
 import { EditTask, Task } from "../";
-import { TaskList as STaskList, TaskListItem } from "./styles";
+import { TaskListContainer, TaskListItem } from "./styles";
 
-export type TTask = {
+
+export type TaskObject = {
   id: string;
   title: string;
   isCompleted: boolean;
 };
 
-type TTaskList = {
-  tasks: TTask[];
+type TaskListProps = {
+  tasks: TaskObject[];
   onChangeStatus: (id: string, isCompleted: boolean) => void;
   onEdit: (id: string, title: string) => void;
   onDelete: (id: string) => void;
@@ -21,7 +22,7 @@ export default function TaskList({
   onChangeStatus,
   onEdit,
   onDelete,
-}: TTaskList) {
+}: TaskListProps) {
   const [idToEdit, setIdToEdit] = useState<string>("");
 
   function handleShowEdit(id: string) {
@@ -38,8 +39,8 @@ export default function TaskList({
   }
 
   return (
-    <STaskList>
-      {tasks.map((task: TTask) => {
+    <TaskListContainer>
+      {tasks.map((task: TaskObject) => {
         const { id, title } = task;
 
         return (
@@ -63,6 +64,6 @@ export default function TaskList({
           </TaskListItem>
         );
       })}
-    </STaskList>
+    </TaskListContainer>
   );
 }

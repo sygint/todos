@@ -1,5 +1,5 @@
-import { NoTasks as SNoTasks } from "./styles";
+import { NoTasksContainer } from "./styles";
 
 export default function NoTasks() {
-  return <SNoTasks>No tasks, add some.</SNoTasks>;
+  return <NoTasksContainer>No tasks, add some.</NoTasksContainer>;
 }
