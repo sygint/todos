@@ -39,7 +39,6 @@ export const Button = styled.button``;
 
 export const Label = styled.label`
   ${(props: { srOnly?: boolean }) => props.srOnly && srOnly}
-
 `;
 
 export const Checkbox = styled.input``;

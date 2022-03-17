@@ -29,9 +29,7 @@ export default function CheckboxField({
           defaultChecked={isChecked}
           className="todo__state"
         />
-        {checkbox && checkbox()}
-        {" "}
-        <div className="todo__text">{label}</div>
+        {checkbox && checkbox()} <div className="todo__text">{label}</div>
       </Label>
     </>
   );
