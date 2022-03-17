@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
+import { get, set } from "idb-keyval";
 
 import { Container, AddTask, TaskList, NoTasks } from "../";
 
@@ -17,80 +18,57 @@ export default function App() {
       alert("Enter a task to add");
     }
 
-    const task = {
-      id: nanoid(),
-      title,
-      isCompleted: false,
-    };
-    const newTasks = [task, ...tasks];
-    const taskIds = newTasks.map(getIds);
+    const newTasks = [
+      {
+        id: nanoid(),
+        title,
+        isCompleted: false,
+      },
+      ...tasks,
+    ];
 
-    localStorage.setItem("tasks", JSON.stringify(taskIds));
-    newTasks.forEach(({ id, title, isCompleted }) =>
-      localStorage.setItem(id, JSON.stringify({ title, isCompleted }))
-    );
-
+    set("todos", newTasks);
     setTasks(newTasks);
   }
 
   function handleChangeStatus(id: string, isCompleted: boolean) {
-    let task;
+    const newTasks = tasks.map((t) =>
+      t.id === id ? { ...t, isCompleted } : t
+    );
 
-    const newTasks = tasks.map((t) => {
-      if (t.id === id) {
-        const { title } = t;
-
-        task = t;
-
-        localStorage.setItem(id, JSON.stringify({ title, isCompleted }));
-
-        return { ...t, isCompleted };
-      }
-
-      return t;
-    });
-
+    set("todos", newTasks);
     setTasks(newTasks);
   }
 
   function handleEdit(id: string, title: string) {
     const newTasks = tasks.map((t) => (t.id === id ? { ...t, title } : t));
-    const task = newTasks.find((t) => t.id === id);
 
+    set("todos", newTasks);
     setTasks(newTasks);
-
-    localStorage.setItem(id, JSON.stringify(task));
   }
 
   function handleDelete(id: string) {
     const newTasks = tasks.filter((t) => t.id !== id);
-    const newTaskIds = newTasks.map(getIds);
 
+    set("todos", newTasks);
     setTasks(newTasks);
-
-    localStorage.setItem("tasks", JSON.stringify(newTaskIds));
-    localStorage.removeItem(id);
   }
 
   const [tasks, setTasks] = useState<Task[]>([]);
 
   useEffect(() => {
-    try {
-      const taskIdsJson = localStorage.getItem("tasks") as string;
+    async function init() {
+      try {
+        const tasks = await get("todos");
 
-      if (taskIdsJson) {
-        const taskIds = JSON.parse(taskIdsJson);
-        const tasks = taskIds.map((id: string) => {
-          const taskJson = localStorage.getItem(id) as string;
-          const task = JSON.parse(taskJson);
-          return { id, ...task };
-        });
-
-        setTasks(tasks);
+        if (tasks) {
+          setTasks(tasks);
+        }
+      } catch (e) {
+        console.error(e);
       }
-    } catch (e) {
-      console.error(e);
     }
+    init();
   }, []);
 
   return (
