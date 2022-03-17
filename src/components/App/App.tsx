@@ -4,7 +4,11 @@ import { get, set } from "idb-keyval";
 
 import { Container, AddTask, TaskList, NoTasks } from "../";
 
-const getIds = ({ id }: { id: string }) => id;
+type onEditOptions = {
+  id: string;
+  key: string;
+  value: string | boolean;
+};
 
 export type Task = {
   id: string;
@@ -31,17 +35,10 @@ export default function App() {
     setTasks(newTasks);
   }
 
-  function handleChangeStatus(id: string, isCompleted: boolean) {
+  function handleEdit({ id, key, value }: onEditOptions) {
     const newTasks = tasks.map((t) =>
-      t.id === id ? { ...t, isCompleted } : t
+      t.id === id ? { ...t, [key]: value } : t
     );
-
-    set("todos", newTasks);
-    setTasks(newTasks);
-  }
-
-  function handleEdit(id: string, title: string) {
-    const newTasks = tasks.map((t) => (t.id === id ? { ...t, title } : t));
 
     set("todos", newTasks);
     setTasks(newTasks);
@@ -75,12 +72,7 @@ export default function App() {
     <Container>
       <AddTask onAdd={handleAdd} />
       {tasks.length ? (
-        <TaskList
-          tasks={tasks}
-          onChangeStatus={handleChangeStatus}
-          onEdit={handleEdit}
-          onDelete={handleDelete}
-        />
+        <TaskList tasks={tasks} onEdit={handleEdit} onDelete={handleDelete} />
       ) : (
         <NoTasks />
       )}

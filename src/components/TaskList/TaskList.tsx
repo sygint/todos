@@ -3,7 +3,7 @@ import { useState } from "react";
 import { EditTask, Task } from "../";
 import { TaskListContainer, TaskListItem } from "./styles";
 
-import { ReactComponent  as ToDoContainer } from "../../assets/todo-container.svg";
+import { ReactComponent as ToDoContainer } from "../../assets/todo-container.svg";
 import { ReactComponent as ToDoCheckbox } from "../../assets/todo-checkbox.svg";
 
 export type TaskObject = {
@@ -12,27 +12,27 @@ export type TaskObject = {
   isCompleted: boolean;
 };
 
+type onEditOptions = {
+  id: string;
+  key: string;
+  value: string | boolean;
+};
+
 type TaskListProps = {
   tasks: TaskObject[];
-  onChangeStatus: (id: string, isCompleted: boolean) => void;
-  onEdit: (id: string, title: string) => void;
+  onEdit: (options: onEditOptions) => void;
   onDelete: (id: string) => void;
 };
 
-export default function TaskList({
-  tasks,
-  onChangeStatus,
-  onEdit,
-  onDelete,
-}: TaskListProps) {
+export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
   const [idToEdit, setIdToEdit] = useState<string>("");
 
   function handleShowEdit(id: string) {
     setIdToEdit(id);
   }
 
-  function handleEdit(id: string, title: string) {
-    onEdit(id, title);
+  function handleEdit({ id, key, value }: onEditOptions) {
+    onEdit({ id, key, value });
     setIdToEdit("");
   }
 
@@ -51,7 +51,9 @@ export default function TaskList({
             {idToEdit === id ? (
               <EditTask
                 key={id}
-                onEdit={(title) => handleEdit(id, title)}
+                onEdit={(title) =>
+                  handleEdit({ id, key: "title", value: title })
+                }
                 value={title}
                 onCancel={handleCancel}
               />
@@ -59,7 +61,9 @@ export default function TaskList({
               <Task
                 key={id}
                 task={task}
-                onChangeStatus={onChangeStatus}
+                onChangeStatus={(isCompleted) =>
+                  handleEdit({ id, key: "isCompleted", value: isCompleted })
+                }
                 onShowEdit={handleShowEdit}
                 onDelete={onDelete}
                 checkbox={() => <ToDoCheckbox />}

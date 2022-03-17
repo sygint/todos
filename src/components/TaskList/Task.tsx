@@ -12,7 +12,7 @@ type TaskObject = {
 type TaskProps = {
   task: TaskObject;
   checkbox?: () => ReactNode;
-  onChangeStatus: (id: string, isChecked: boolean) => void;
+  onChangeStatus: (isCompleted: boolean) => void;
   onShowEdit: (id: string) => void;
   onDelete: (id: string) => void;
 };
@@ -25,14 +25,20 @@ export default function Task({
   onDelete,
 }: TaskProps) {
   function handleChange(isChecked: boolean) {
-    onChangeStatus(id, isChecked);
+    onChangeStatus(isChecked);
   }
 
   const { id, title, isCompleted } = task;
 
   return (
     <TaskContainer>
-      <CheckboxField id={id} label={title} isChecked={isCompleted} onChange={handleChange} checkbox={checkbox} />
+      <CheckboxField
+        id={id}
+        label={title}
+        isChecked={isCompleted}
+        onChange={handleChange}
+        checkbox={checkbox}
+      />
       <Button className="button" onClick={() => onShowEdit(id)}>
         Edit
       </Button>
