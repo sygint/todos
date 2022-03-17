@@ -1,4 +1,4 @@
-import { InputForm } from "../";
+import InputForm from "./shared/InputForm";
 
 type TEditTask = {
   onEdit: (data: string) => void;
@@ -6,15 +6,21 @@ type TEditTask = {
   onCancel: () => void;
 };
 
-export default function EditTask({ onEdit, value, onCancel }: TEditTask) {
+function EditTask({ onEdit, value, onCancel }: TEditTask) {
   return (
     <InputForm
       onSubmit={onEdit}
       buttonText="save"
       label="Edit a task"
       value={value}
-      hasCancel={true}
+      hasCancel
       onCancel={onCancel}
     />
   );
 }
+
+EditTask.defaultProps = {
+  value: "",
+};
+
+export default EditTask;

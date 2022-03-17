@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
 
-import { CheckboxField, Button } from "..";
+import CheckboxField from "../shared/CheckboxField";
+import { Button } from "../shared/atoms";
 import { TaskContainer } from "./styles";
 
 type TaskObject = {
@@ -17,16 +18,16 @@ type TaskProps = {
   onDelete: (id: string) => void;
 };
 
-export default function Task({
+function Task({
   task,
   checkbox,
   onChangeStatus,
   onShowEdit,
   onDelete,
 }: TaskProps) {
-  function handleChange(isChecked: boolean) {
+  const handleChange = (isChecked: boolean) => {
     onChangeStatus(isChecked);
-  }
+  };
 
   const { id, title, isCompleted } = task;
 
@@ -48,3 +49,9 @@ export default function Task({
     </TaskContainer>
   );
 }
+
+Task.defaultProps = {
+  checkbox: null,
+};
+
+export default Task;

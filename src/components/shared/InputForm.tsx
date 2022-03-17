@@ -1,6 +1,7 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 
-import { Button, TextField, Form } from "../..";
+import TextField from "./TextField";
+import { Button, Form } from "./atoms";
 
 type TInputForm = {
   onSubmit: (data: string) => void;
@@ -12,7 +13,7 @@ type TInputForm = {
   onCancel?: () => void;
 };
 
-export default function InputForm({
+function InputForm({
   onSubmit,
   buttonText,
   label,
@@ -23,12 +24,12 @@ export default function InputForm({
 }: TInputForm) {
   const [data, setData] = useState<string>(value || "");
 
-  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     onSubmit(data);
     setData("");
-  }
+  };
 
   return (
     <Form onSubmit={handleSubmit} hasCancel={hasCancel}>
@@ -48,3 +49,12 @@ export default function InputForm({
     </Form>
   );
 }
+
+InputForm.defaultProps = {
+  placeholder: "",
+  value: "",
+  hasCancel: false,
+  onCancel: () => {},
+};
+
+export default InputForm;

@@ -12,14 +12,6 @@ const srOnly = css`
   border-width: 0;
 `;
 
-const colors = {
-  black: "#363839",
-  lightGray: "#9c9e9f",
-  gray: "#bdc1c6",
-  white: "#fff",
-  green: "#00d1b2",
-};
-
 export const Container = styled.div`
   max-width: 50rem;
   padding: 2rem;

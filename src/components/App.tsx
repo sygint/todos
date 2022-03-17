@@ -2,9 +2,12 @@ import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { get, set } from "idb-keyval";
 
-import { Container, AddTask, TaskList, NoTasks } from "../";
+import { Container } from "./shared/atoms";
+import AddTask from "./AddTask";
+import TaskList from "./TaskList/TaskList";
+import NoTasks from "./TaskList/NoTasks";
 
-type onEditOptions = {
+type OnEditOptions = {
   id: string;
   key: string;
   value: string | boolean;
@@ -17,8 +20,11 @@ export type Task = {
 };
 
 export default function App() {
-  function handleAdd(title: string) {
+  const [tasks, setTasks] = useState<Task[]>([]);
+
+  const handleAdd = (title: string) => {
     if (!title) {
+      /* eslint-disable no-alert */
       alert("Enter a task to add");
     }
 
@@ -33,35 +39,34 @@ export default function App() {
 
     set("todos", newTasks);
     setTasks(newTasks);
-  }
+  };
 
-  function handleEdit({ id, key, value }: onEditOptions) {
+  const handleEdit = ({ id, key, value }: OnEditOptions) => {
     const newTasks = tasks.map((t) =>
-      t.id === id ? { ...t, [key]: value } : t
+      t.id === id ? { ...t, [key]: value } : t,
     );
 
     set("todos", newTasks);
     setTasks(newTasks);
-  }
+  };
 
-  function handleDelete(id: string) {
+  const handleDelete = (id: string) => {
     const newTasks = tasks.filter((t) => t.id !== id);
 
     set("todos", newTasks);
     setTasks(newTasks);
-  }
-
-  const [tasks, setTasks] = useState<Task[]>([]);
+  };
 
   useEffect(() => {
     async function init() {
       try {
-        const tasks = await get("todos");
+        const fetchedTasks = await get("todos");
 
-        if (tasks) {
-          setTasks(tasks);
+        if (fetchedTasks) {
+          setTasks(fetchedTasks);
         }
       } catch (e) {
+        /* eslint-disable no-console */
         console.error(e);
       }
     }

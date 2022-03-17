@@ -1,6 +1,7 @@
 import { useState } from "react";
 
-import { EditTask, Task } from "../";
+import EditTask from "../EditTask";
+import Task from "./Task";
 import { TaskListContainer, TaskListItem } from "./styles";
 
 import { ReactComponent as ToDoContainer } from "../../assets/todo-container.svg";
@@ -12,7 +13,7 @@ export type TaskObject = {
   isCompleted: boolean;
 };
 
-type onEditOptions = {
+type OnEditOptions = {
   id: string;
   key: string;
   value: string | boolean;
@@ -20,25 +21,27 @@ type onEditOptions = {
 
 type TaskListProps = {
   tasks: TaskObject[];
-  onEdit: (options: onEditOptions) => void;
+  onEdit: (options: OnEditOptions) => void;
   onDelete: (id: string) => void;
 };
+
+const renderToDoCheckbox = () => <ToDoCheckbox />;
 
 export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
   const [idToEdit, setIdToEdit] = useState<string>("");
 
-  function handleShowEdit(id: string) {
+  const handleShowEdit = (id: string) => {
     setIdToEdit(id);
-  }
+  };
 
-  function handleEdit({ id, key, value }: onEditOptions) {
+  const handleEdit = ({ id, key, value }: OnEditOptions) => {
     onEdit({ id, key, value });
     setIdToEdit("");
-  }
+  };
 
-  function handleCancel() {
+  const handleCancel = () => {
     setIdToEdit("");
-  }
+  };
 
   return (
     <TaskListContainer>
@@ -51,8 +54,12 @@ export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
             {idToEdit === id ? (
               <EditTask
                 key={id}
-                onEdit={(title) =>
-                  handleEdit({ id, key: "title", value: title })
+                onEdit={(newTitle) =>
+                  handleEdit({
+                    id,
+                    key: "title",
+                    value: newTitle,
+                  })
                 }
                 value={title}
                 onCancel={handleCancel}
@@ -62,11 +69,15 @@ export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
                 key={id}
                 task={task}
                 onChangeStatus={(isCompleted) =>
-                  handleEdit({ id, key: "isCompleted", value: isCompleted })
+                  handleEdit({
+                    id,
+                    key: "isCompleted",
+                    value: isCompleted,
+                  })
                 }
                 onShowEdit={handleShowEdit}
                 onDelete={onDelete}
-                checkbox={() => <ToDoCheckbox />}
+                checkbox={renderToDoCheckbox}
               />
             )}
           </TaskListItem>

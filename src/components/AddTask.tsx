@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { InputForm } from "../";
+import InputForm from "./shared/InputForm";
 
 type AddTaskProps = {
   onAdd: (data: string) => void;
@@ -11,7 +11,7 @@ const AddTaskWrapper = styled.div`
   padding: 1rem;
 `;
 
-export default function AddTask({ onAdd, value }: AddTaskProps) {
+function AddTask({ onAdd, value }: AddTaskProps) {
   return (
     <AddTaskWrapper>
       <InputForm
@@ -24,3 +24,9 @@ export default function AddTask({ onAdd, value }: AddTaskProps) {
     </AddTaskWrapper>
   );
 }
+
+AddTask.defaultProps = {
+  value: "",
+};
+
+export default AddTask;

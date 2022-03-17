@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { Label, Input } from "../atoms";
+import { Label, Input } from "./atoms";
 
 type TextFieldProps = {
   label: string;
@@ -9,7 +9,7 @@ type TextFieldProps = {
   onChange: (event: ChangeEvent<HTMLInputElement>) => void;
 };
 
-export default function TextField({
+function TextField({
   label,
   id,
   placeholder,
@@ -18,7 +18,7 @@ export default function TextField({
 }: TextFieldProps) {
   return (
     <>
-      <Label htmlFor={id} srOnly={true}>
+      <Label htmlFor={id} srOnly>
         {label}
       </Label>
       <Input
@@ -31,3 +31,10 @@ export default function TextField({
     </>
   );
 }
+
+TextField.defaultProps = {
+  placeholder: "",
+  value: "",
+};
+
+export default TextField;
