@@ -8,7 +8,7 @@ type AddTaskProps = {
 };
 
 const AddTaskWrapper = styled.div`
-  padding: 1rem;
+  padding: 1rem 0.5rem;
 `;
 
 function AddTask({ onAdd, value }: AddTaskProps) {

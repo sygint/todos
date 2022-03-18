@@ -14,7 +14,7 @@ export const TaskListContainer = styled.ul`
 `;
 
 export const TaskListItem = styled.li`
-  padding: 1rem;
+  padding: 0.5rem;
   border-bottom: 1px solid #ccc;
   &:last-child {
     border-bottom: 0;
