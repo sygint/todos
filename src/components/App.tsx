@@ -37,7 +37,7 @@ export default function App() {
       ...tasks,
     ];
 
-    set("todos", newTasks);
+    set("tasks", newTasks);
     setTasks(newTasks);
   };
 
@@ -46,21 +46,21 @@ export default function App() {
       t.id === id ? { ...t, [key]: value } : t,
     );
 
-    set("todos", newTasks);
+    set("tasks", newTasks);
     setTasks(newTasks);
   };
 
   const handleDelete = (id: string) => {
     const newTasks = tasks.filter((t) => t.id !== id);
 
-    set("todos", newTasks);
+    set("tasks", newTasks);
     setTasks(newTasks);
   };
 
   useEffect(() => {
     async function init() {
       try {
-        const fetchedTasks = await get("todos");
+        const fetchedTasks = await get("tasks");
 
         if (fetchedTasks) {
           setTasks(fetchedTasks);
