@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { nanoid } from "nanoid";
 import { get, set } from "idb-keyval";
 
+import { decrypt, encrypt } from "../lib/crypto";
 import { Container } from "./shared/atoms";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
@@ -19,8 +20,18 @@ export type Task = {
   isCompleted: boolean;
 };
 
+const password = "password";
+
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
+
+  const saveTasks = async (tasksData: Task[]) => {
+    const tasksJsonString = await JSON.stringify(tasksData);
+    const encryptedTasks = await encrypt(tasksJsonString, password);
+
+    set("tasks", encryptedTasks);
+    setTasks(tasksData);
+  }
 
   const handleAdd = (title: string) => {
     if (!title) {
@@ -37,8 +48,7 @@ export default function App() {
       ...tasks,
     ];
 
-    set("tasks", newTasks);
-    setTasks(newTasks);
+    saveTasks(newTasks);
   };
 
   const handleEdit = ({ id, key, value }: OnEditOptions) => {
@@ -46,24 +56,24 @@ export default function App() {
       t.id === id ? { ...t, [key]: value } : t,
     );
 
-    set("tasks", newTasks);
-    setTasks(newTasks);
+    saveTasks(newTasks);
   };
 
   const handleDelete = (id: string) => {
     const newTasks = tasks.filter((t) => t.id !== id);
 
-    set("tasks", newTasks);
-    setTasks(newTasks);
+    saveTasks(newTasks);
   };
 
   useEffect(() => {
     async function init() {
       try {
-        const fetchedTasks = await get("tasks");
+        const encryptedTasks = await get("tasks");
 
-        if (fetchedTasks) {
-          setTasks(fetchedTasks);
+        if (encryptedTasks) {
+          const decryptedTasksJson = await decrypt(encryptedTasks, password);
+          const decryptedTasks = await JSON.parse(decryptedTasksJson);
+          setTasks(decryptedTasks);
         }
       } catch (e) {
         /* eslint-disable no-console */
