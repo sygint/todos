@@ -1,7 +1,7 @@
 import { useState, FormEvent, ChangeEvent } from "react";
 
 import TextField from "./TextField";
-import { Button, Form } from "./atoms";
+import { Button, Form } from "./styles";
 
 type TInputForm = {
   onSubmit: (data: string) => void;

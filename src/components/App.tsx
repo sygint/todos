@@ -3,7 +3,7 @@ import { nanoid } from "nanoid";
 import { get, set } from "idb-keyval";
 
 import { decrypt, encrypt } from "../lib/crypto";
-import { Container } from "./shared/atoms";
+import { Container } from "./styles";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
 import NoTasks from "./TaskList/NoTasks";

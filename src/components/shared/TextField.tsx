@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { Label, Input } from "./atoms";
+import { Label, Input } from "./styles";
 
 type TextFieldProps = {
   label: string;

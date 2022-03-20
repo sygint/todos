@@ -1,5 +1,5 @@
 import { ReactNode, ChangeEvent } from "react";
-import { Label, Checkbox } from "./atoms";
+import { Label, Checkbox } from "./styles";
 
 type CheckboxFieldProps = {
   id: string;

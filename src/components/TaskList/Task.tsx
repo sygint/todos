@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 import CheckboxField from "../shared/CheckboxField";
-import { Button } from "../shared/atoms";
+import { Button } from "../shared/styles";
 import { TaskContainer } from "./styles";
 
 type TaskObject = {
