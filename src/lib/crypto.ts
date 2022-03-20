@@ -68,11 +68,16 @@ export async function encrypt(data: string, password: string): Promise<string> {
 
     const encryptedContentArray = new Uint8Array(encryptedContent);
     const buffer = new Uint8Array(
-      salt.byteLength + initialVector.byteLength + encryptedContentArray.byteLength,
+      salt.byteLength +
+        initialVector.byteLength +
+        encryptedContentArray.byteLength,
     );
     buffer.set(salt, 0);
     buffer.set(initialVector, salt.byteLength);
-    buffer.set(encryptedContentArray, salt.byteLength + initialVector.byteLength);
+    buffer.set(
+      encryptedContentArray,
+      salt.byteLength + initialVector.byteLength,
+    );
 
     return bufferToBase64(buffer);
   } catch (e) {

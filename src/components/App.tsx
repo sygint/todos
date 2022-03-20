@@ -31,7 +31,7 @@ export default function App() {
 
     set("tasks", encryptedTasks);
     setTasks(tasksData);
-  }
+  };
 
   const handleAdd = (title: string) => {
     if (!title) {
