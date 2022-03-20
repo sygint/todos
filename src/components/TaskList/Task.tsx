@@ -1,7 +1,8 @@
 import { ReactNode } from "react";
+import { Edit, Trash2 } from "react-feather";
 
 import CheckboxField from "../shared/CheckboxField";
-import { Button } from "../shared/styles";
+import { IconButton, SROnly } from "../shared/styles";
 import { TaskContainer } from "./styles";
 
 type TaskObject = {
@@ -40,12 +41,12 @@ function Task({
         onChange={handleChange}
         checkbox={checkbox}
       />
-      <Button className="button" onClick={() => onShowEdit(id)}>
-        Edit
-      </Button>
-      <Button className="button is-danger" onClick={() => onDelete(id)}>
-        Delete
-      </Button>
+      <IconButton onClick={() => onShowEdit(id)}>
+        <Edit color="#135156" /> <SROnly>Edit</SROnly>
+      </IconButton>
+      <IconButton onClick={() => onDelete(id)}>
+        <Trash2 color="#135156" /> <SROnly>Delete</SROnly>
+      </IconButton>
     </TaskContainer>
   );
 }
