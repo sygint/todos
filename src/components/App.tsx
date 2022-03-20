@@ -24,6 +24,7 @@ const password = "password";
 
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const saveTasks = async (tasksData: Task[]) => {
     const tasksJsonString = await JSON.stringify(tasksData);
@@ -75,6 +76,8 @@ export default function App() {
           const decryptedTasks = await JSON.parse(decryptedTasksJson);
           setTasks(decryptedTasks);
         }
+
+        setIsLoaded(true);
       } catch (e) {
         /* eslint-disable no-console */
         console.error(e);
@@ -83,13 +86,15 @@ export default function App() {
     init();
   }, []);
 
+  const noTasks = isLoaded ? <NoTasks /> : null;
+
   return (
     <Container>
       <AddTask onAdd={handleAdd} />
       {tasks.length ? (
         <TaskList tasks={tasks} onEdit={handleEdit} onDelete={handleDelete} />
       ) : (
-        <NoTasks />
+        noTasks
       )}
     </Container>
   );
