@@ -39,7 +39,6 @@ function Task({
         label={title}
         isChecked={isCompleted}
         onChange={handleChange}
-        checkbox={checkbox}
       />
       <IconButton onClick={() => onShowEdit(id)}>
         <Edit color="#135156" /> <SROnly>Edit</SROnly>

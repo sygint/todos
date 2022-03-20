@@ -1,11 +1,12 @@
-import { ReactNode, ChangeEvent } from "react";
-import { Label, Checkbox } from "../shared/styles";
+import { ChangeEvent } from "react";
 
-type CheckboxFieldProps = {
+import { TaskText, Label, Checkbox } from "./styles";
+import { ReactComponent as ToDoCheckboxSVG } from "../../assets/todo-checkbox.svg";
+
+type TaskCheckboxProps = {
   id: string;
   label: string;
   isChecked: boolean;
-  checkbox?: () => ReactNode;
   onChange: (isChecked: boolean) => void;
 };
 
@@ -13,11 +14,10 @@ function TaskCheckbox({
   id,
   label,
   isChecked = false,
-  checkbox,
   onChange,
-}: CheckboxFieldProps) {
+}: TaskCheckboxProps) {
   return (
-    <Label className="todo" htmlFor={id} data-content={label}>
+    <Label htmlFor={id} data-content={label}>
       <Checkbox
         type="checkbox"
         id={id}
@@ -25,15 +25,11 @@ function TaskCheckbox({
           onChange(event.target.checked)
         }
         defaultChecked={isChecked}
-        className="todo__state"
       />
-      {checkbox && checkbox()} <div className="todo__text">{label}</div>
+      <ToDoCheckboxSVG />
+      <TaskText>{label}</TaskText>
     </Label>
   );
 }
-
-TaskCheckbox.defaultProps = {
-  checkbox: () => {},
-};
 
 export default TaskCheckbox;
