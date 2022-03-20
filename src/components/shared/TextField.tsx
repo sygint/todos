@@ -6,7 +6,7 @@ type TextFieldProps = {
   placeholder?: string;
   id: string;
   value?: string;
-  onChange: (event: ChangeEvent<HTMLInputElement>) => void;
+  onChange: (value: string) => void;
 };
 
 function TextField({
@@ -16,6 +16,9 @@ function TextField({
   value,
   onChange,
 }: TextFieldProps) {
+  const handleOnChange = (event: ChangeEvent<HTMLInputElement>) =>
+    onChange(event.currentTarget.value);
+
   return (
     <>
       <Label htmlFor={id} srOnly>
@@ -23,9 +26,10 @@ function TextField({
       </Label>
       <Input
         id={id}
+        name={id}
         placeholder={placeholder}
         value={value}
-        onChange={onChange}
+        onChange={handleOnChange}
         className="input"
       />
     </>
@@ -34,7 +38,7 @@ function TextField({
 
 TextField.defaultProps = {
   placeholder: "",
-  value: "",
+  value: null,
 };
 
 export default TextField;

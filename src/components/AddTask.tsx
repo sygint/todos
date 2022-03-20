@@ -1,32 +1,41 @@
+import { useState, FormEvent } from "react";
 import styled from "styled-components";
 
-import InputForm from "./shared/InputForm";
+import TextField from "./shared/TextField";
+import { Button, Form } from "./shared/styles";
 
 type AddTaskProps = {
   onAdd: (data: string) => void;
-  value?: string | undefined;
 };
 
 const AddTaskWrapper = styled.div`
   padding: 1rem 0.5rem;
 `;
 
-function AddTask({ onAdd, value }: AddTaskProps) {
+function AddTask({ onAdd }: AddTaskProps) {
+  const [newTask, setNewTask] = useState("");
+
+  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    onAdd(newTask);
+    setNewTask("");
+  };
+
   return (
     <AddTaskWrapper>
-      <InputForm
-        onSubmit={onAdd}
-        buttonText="Add"
-        label="Add a task"
-        placeholder="Buy milk"
-        value={value}
-      />
+      <Form onSubmit={handleSubmit}>
+        <TextField
+          id="addName"
+          label="Add a task"
+          placeholder="Buy Milk"
+          value={newTask}
+          onChange={setNewTask}
+        />
+        <Button className="button is-primary">Add</Button>
+      </Form>
     </AddTaskWrapper>
   );
 }
-
-AddTask.defaultProps = {
-  value: "",
-};
 
 export default AddTask;

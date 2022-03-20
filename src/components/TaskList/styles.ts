@@ -1,12 +1,6 @@
 import styled from "styled-components";
 
-export const TaskContainer = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: auto min-content min-content;
-  gap: 0.5rem;
-  align-items: center;
-`;
+import CheckboxField from "../shared/CheckboxField";
 
 export const TaskListContainer = styled.ul`
   border-top: 1px solid #ccc;
@@ -25,3 +19,13 @@ export const NoTasksContainer = styled.div`
   margin: 2rem 0;
   text-align: center;
 `;
+
+export const TaskContainer = styled.div`
+  position: relative;
+  display: grid;
+  grid-template-columns: auto min-content min-content;
+  gap: 0.5rem;
+  align-items: center;
+`;
+
+export const TaskCheckbox = styled(CheckboxField)``;

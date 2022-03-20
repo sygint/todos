@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 import { Edit, Trash2 } from "react-feather";
 
-import CheckboxField from "../shared/CheckboxField";
+import TaskCheckbox from "./TaskCheckbox";
 import { IconButton, SROnly } from "../shared/styles";
 import { TaskContainer } from "./styles";
 
@@ -34,7 +34,7 @@ function Task({
 
   return (
     <TaskContainer>
-      <CheckboxField
+      <TaskCheckbox
         id={id}
         label={title}
         isChecked={isCompleted}
