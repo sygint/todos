@@ -17,6 +17,8 @@ export const IconButton = styled.button`
   padding: 0;
   background: none;
   cursor: pointer;
+
+  ${(props: { hide?: boolean }) => props.hide && "visibility: hidden;"}
 `;
 
 export const Label = styled.label`

@@ -1,15 +1,24 @@
 import styled from "styled-components";
 
+import { IconButton } from "../shared/styles";
+
 export const TaskListContainer = styled.ul`
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
 `;
 
 export const TaskListItem = styled.li`
-  padding: 0.5rem;
   border-bottom: 1px solid #ccc;
+
   &:last-child {
     border-bottom: 0;
+  }
+
+  &:hover {
+    .edit-button,
+    .delete-button {
+      visibility: visible;
+    }
   }
 `;
 
@@ -23,6 +32,7 @@ export const TaskContainer = styled.div`
   display: grid;
   grid-template-columns: auto min-content min-content;
   gap: 0.5rem;
+  padding: 0.5rem;
   align-items: center;
 `;
 

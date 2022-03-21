@@ -32,10 +32,10 @@ function Task({ task, onChangeStatus, onShowEdit, onDelete }: TaskProps) {
         isChecked={isCompleted}
         onChange={handleChange}
       />
-      <IconButton onClick={() => onShowEdit(id)}>
+      <IconButton className="edit-button" hide onClick={() => onShowEdit(id)}>
         <Edit color="#135156" /> <SROnly>Edit</SROnly>
       </IconButton>
-      <IconButton onClick={() => onDelete(id)}>
+      <IconButton className="delete-button" hide onClick={() => onDelete(id)}>
         <Trash2 color="#135156" /> <SROnly>Delete</SROnly>
       </IconButton>
     </TaskContainer>
