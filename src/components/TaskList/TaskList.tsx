@@ -5,7 +5,6 @@ import Task from "./Task";
 import { TaskListContainer, TaskListItem } from "./styles";
 
 import { ReactComponent as ToDoSVGContainer } from "../../assets/todo-container.svg";
-import { ReactComponent as ToDoCheckbox } from "../../assets/todo-checkbox.svg";
 
 export type TaskObject = {
   id: string;

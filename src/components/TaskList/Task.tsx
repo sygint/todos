@@ -1,4 +1,3 @@
-import { ReactNode } from "react";
 import { Edit, Trash2 } from "react-feather";
 
 import TaskCheckbox from "./TaskCheckbox";
@@ -13,19 +12,12 @@ type TaskObject = {
 
 type TaskProps = {
   task: TaskObject;
-  checkbox?: () => ReactNode;
   onChangeStatus: (isCompleted: boolean) => void;
   onShowEdit: (id: string) => void;
   onDelete: (id: string) => void;
 };
 
-function Task({
-  task,
-  checkbox,
-  onChangeStatus,
-  onShowEdit,
-  onDelete,
-}: TaskProps) {
+function Task({ task, onChangeStatus, onShowEdit, onDelete }: TaskProps) {
   const handleChange = (isChecked: boolean) => {
     onChangeStatus(isChecked);
   };
@@ -49,9 +41,5 @@ function Task({
     </TaskContainer>
   );
 }
-
-Task.defaultProps = {
-  checkbox: null,
-};
 
 export default Task;
