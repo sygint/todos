@@ -68,7 +68,8 @@ export const Label = styled.label`
 `;
 
 export const TaskText = styled.span`
-  margin-left: 45px;
+  margin-left: 30px;
   color: saturate(#1b4a4e, 15%);
+  font-size: 14px;
   transition: all $duration / 2 linear $duration / 2;
 `;

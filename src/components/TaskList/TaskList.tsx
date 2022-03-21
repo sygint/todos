@@ -25,8 +25,6 @@ type TaskListProps = {
   onDelete: (id: string) => void;
 };
 
-const renderToDoCheckbox = () => <ToDoCheckbox />;
-
 export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
   const [idToEdit, setIdToEdit] = useState<string>("");
 
@@ -77,7 +75,6 @@ export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
                 }
                 onShowEdit={handleShowEdit}
                 onDelete={onDelete}
-                checkbox={renderToDoCheckbox}
               />
             )}
           </TaskListItem>
