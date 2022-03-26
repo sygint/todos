@@ -37,11 +37,11 @@ export const TaskContainer = styled.div`
 `;
 
 export const Checkbox = styled.input`
-  display: none;
-  position: absolute;
-  top: 0;
-  left: 0;
-  opacity: 0;
+  // display: none;
+  // position: absolute;
+  // top: 0;
+  // left: 0;
+  // opacity: 0;
 
   &:checked {
     ~ span {

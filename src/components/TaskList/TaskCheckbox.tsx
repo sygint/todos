@@ -26,7 +26,7 @@ function TaskCheckbox({
         }
         defaultChecked={isChecked}
       />
-      <ToDoCheckboxSVG />
+      {/* <ToDoCheckboxSVG /> */}
       <TaskText>{label}</TaskText>
     </Label>
   );
