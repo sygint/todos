@@ -3,6 +3,7 @@ import { nanoid } from "nanoid";
 import { get, set } from "idb-keyval";
 
 import { decrypt, encrypt } from "../lib/crypto";
+import { downloadBlobAsFile } from "../lib/utils";
 import { Container } from "./styles";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
@@ -32,6 +33,13 @@ export default function App() {
 
     set("tasks", encryptedTasks);
     setTasks(tasksData);
+  };
+
+  const backupTasks = async () => {
+    const tasksJsonString = await JSON.stringify(tasks);
+    const encryptedTasks = await encrypt(tasksJsonString, password);
+
+    downloadBlobAsFile(encryptedTasks, "backup.txt");
   };
 
   const handleAdd = (title: string) => {
@@ -90,6 +98,11 @@ export default function App() {
 
   return (
     <Container>
+      <div style={{ display: "grid" }}>
+        <button type="button" onClick={backupTasks}>
+          Backup
+        </button>
+      </div>
       <AddTask onAdd={handleAdd} />
       {tasks.length ? (
         <TaskList tasks={tasks} onEdit={handleEdit} onDelete={handleDelete} />
