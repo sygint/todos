@@ -40,6 +40,8 @@ export const Checkbox = styled.input`
   // top: 0;
   // left: 0;
   // opacity: 0;
+  width: 18px;
+  height: 18px;
 
   &:checked {
     ~ span {
@@ -66,9 +68,13 @@ export const Checkbox = styled.input`
 `;
 
 export const Label = styled.label`
-  display: block;
+  display: flex;
+  align-items: center;
   position: relative;
   cursor: pointer;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 
   &:last-child {
     border-bottom: none;
