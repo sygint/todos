@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { IconButton } from "../shared/styles";
-
 export const TaskListContainer = styled.ul`
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
