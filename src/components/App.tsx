@@ -42,6 +42,12 @@ export default function App() {
     downloadBlobAsFile(encryptedTasks, "backup.txt");
   };
 
+  const exportTasks = async () => {
+    const tasksJsonString = await JSON.stringify(tasks, null, 2);
+
+    downloadBlobAsFile(tasksJsonString, "export.txt");
+  };
+
   const handleAdd = (title: string) => {
     if (!title) {
       /* eslint-disable no-alert */
@@ -98,9 +104,18 @@ export default function App() {
 
   return (
     <Container>
-      <div style={{ display: "grid" }}>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(2, 1fr)",
+          gap: "0.5rem",
+        }}
+      >
         <button type="button" onClick={backupTasks}>
           Backup
+        </button>
+        <button type="button" onClick={exportTasks}>
+          export
         </button>
       </div>
       <AddTask onAdd={handleAdd} />
