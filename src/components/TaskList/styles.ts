@@ -28,7 +28,7 @@ export const NoTasksContainer = styled.div`
 export const TaskContainer = styled.div`
   position: relative;
   display: grid;
-  grid-template-columns: auto min-content min-content;
+  grid-template-columns: min-content auto min-content min-content;
   gap: 0.5rem;
   padding: 0.5rem;
   align-items: center;
@@ -44,7 +44,7 @@ export const Checkbox = styled.input`
   height: 18px;
 
   &:checked {
-    ~ span {
+    + label {
       transition-delay: 0s;
       color: #5ebec1;
       opacity: 0.6;
@@ -69,6 +69,7 @@ export const Checkbox = styled.input`
 
 export const Label = styled.label`
   display: flex;
+  justify-content: flex-start;
   align-items: center;
   position: relative;
   cursor: pointer;
@@ -82,7 +83,7 @@ export const Label = styled.label`
 `;
 
 export const TaskText = styled.span`
-  margin-left: 30px;
+  margin-left: 0.25rem;
   color: saturate(#1b4a4e, 15%);
   font-size: 14px;
   transition: all $duration / 2 linear $duration / 2;
