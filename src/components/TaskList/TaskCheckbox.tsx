@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 
-import { TaskText, Label, Checkbox } from "./styles";
+import { /* TaskText, */ Label, Checkbox } from "./styles";
 // import { ReactComponent as ToDoCheckboxSVG } from "../../assets/todo-checkbox.svg";
 
 type TaskCheckboxProps = {
@@ -28,7 +28,9 @@ function TaskCheckbox({
       />
       <Label htmlFor={id} data-content={label}>
         {/* <ToDoCheckboxSVG /> */}
-        <TaskText>{label}</TaskText>
+        {/* <TaskText> */}
+        {label}
+        {/* </TaskText> */}
       </Label>
     </>
   );
