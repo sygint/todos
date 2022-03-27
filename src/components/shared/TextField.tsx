@@ -1,5 +1,5 @@
 import { ChangeEvent } from "react";
-import { Label, Input } from "./styles";
+import { Label } from "./styles";
 
 type TextFieldProps = {
   label: string;
@@ -24,9 +24,10 @@ function TextField({
       <Label htmlFor={id} srOnly>
         {label}
       </Label>
-      <Input
+      <input
         id={id}
         name={id}
+        type="text"
         placeholder={placeholder}
         value={value}
         onChange={handleOnChange}

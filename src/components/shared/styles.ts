@@ -25,10 +25,6 @@ export const Label = styled.label`
   ${(props: { srOnly?: boolean }) => props.srOnly && srOnly}
 `;
 
-export const Checkbox = styled.input``;
-
-export const Input = styled.input``;
-
 export const SROnly = styled.span`
   ${srOnly}
 `;
