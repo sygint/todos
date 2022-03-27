@@ -4,10 +4,9 @@ import { get, set } from "idb-keyval";
 
 import { decrypt, encrypt } from "../lib/crypto";
 import { downloadBlobAsFile } from "../lib/utils";
-import { Container } from "./styles";
+import { Container, NoTasks } from "./styles";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
-import NoTasks from "./TaskList/NoTasks";
 
 type OnEditOptions = {
   id: string;
@@ -100,7 +99,7 @@ export default function App() {
     init();
   }, []);
 
-  const noTasks = isLoaded ? <NoTasks /> : null;
+  const noTasks = isLoaded ? <NoTasks>No tasks, add some.</NoTasks> : null;
 
   return (
     <Container>

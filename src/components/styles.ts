@@ -17,3 +17,8 @@ export const Container = styled.div`
   padding: 2rem;
   margin: 0 auto;
 `;
+
+export const NoTasks = styled.div`
+  margin: 2rem 0;
+  text-align: center;
+`;

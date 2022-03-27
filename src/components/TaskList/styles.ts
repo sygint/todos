@@ -20,11 +20,6 @@ export const TaskListItem = styled.li`
   }
 `;
 
-export const NoTasksContainer = styled.div`
-  margin: 2rem 0;
-  text-align: center;
-`;
-
 export const TaskContainer = styled.div`
   position: relative;
   display: grid;
