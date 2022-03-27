@@ -8,7 +8,7 @@ type AddTaskProps = {
   onAdd: (data: string) => void;
 };
 
-const AddTaskContainer = styled.div`
+const AddTaskForm = styled(Form)`
   padding: 1rem 0.5rem;
 `;
 
@@ -23,18 +23,16 @@ function AddTask({ onAdd }: AddTaskProps) {
   };
 
   return (
-    <AddTaskContainer>
-      <Form onSubmit={handleSubmit}>
-        <TextField
-          id="addName"
-          label="Add a task"
-          placeholder="Buy Milk"
-          value={newTask}
-          onChange={setNewTask}
-        />
-        <Button className="button is-primary">Add</Button>
-      </Form>
-    </AddTaskContainer>
+    <AddTaskForm onSubmit={handleSubmit}>
+      <TextField
+        id="addName"
+        label="Add a task"
+        placeholder="Buy Milk"
+        value={newTask}
+        onChange={setNewTask}
+      />
+      <Button className="button is-primary">Add</Button>
+    </AddTaskForm>
   );
 }
 
