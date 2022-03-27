@@ -1,7 +1,5 @@
 import styled from "styled-components";
 
-import { srOnly } from "../styles";
-
 export const Form = styled.form`
   display: grid;
   gap: 1rem;
@@ -19,12 +17,4 @@ export const IconButton = styled.button`
   cursor: pointer;
 
   ${(props: { hide?: boolean }) => props.hide && "visibility: hidden;"}
-`;
-
-export const Label = styled.label`
-  ${(props: { srOnly?: boolean }) => props.srOnly && srOnly}
-`;
-
-export const SROnly = styled.span`
-  ${srOnly}
 `;

@@ -1,7 +1,7 @@
 import { Edit2, Trash2 } from "react-feather";
 
 import TaskCheckbox from "./TaskCheckbox";
-import { IconButton, SROnly } from "../shared/styles";
+import { IconButton } from "../shared/styles";
 import { TaskContainer } from "./styles";
 
 type TaskObject = {
@@ -33,10 +33,10 @@ function Task({ task, onChangeStatus, onShowEdit, onDelete }: TaskProps) {
         onChange={handleChange}
       />
       <IconButton className="edit-button" hide onClick={() => onShowEdit(id)}>
-        <Edit2 color="#135156" /> <SROnly>Edit</SROnly>
+        <Edit2 color="#135156" /> <span className="sr-only">Edit</span>
       </IconButton>
       <IconButton className="delete-button" hide onClick={() => onDelete(id)}>
-        <Trash2 color="#135156" /> <SROnly>Delete</SROnly>
+        <Trash2 color="#135156" /> <span className="sr-only">Delete</span>
       </IconButton>
     </TaskContainer>
   );

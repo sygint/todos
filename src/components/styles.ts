@@ -1,4 +1,4 @@
-import styled, { css, createGlobalStyle } from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 import animatedCheckbox from "./styles/animatedCheckbox";
 
@@ -17,19 +17,19 @@ export const GlobalStyle = createGlobalStyle`
       monospace;
   }
 
-  /* ${animatedCheckbox} */
-`;
+  .sr-only {
+    position: absolute !important;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border-width: 0;
+  }
 
-export const srOnly = css`
-  position: absolute !important;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+  /* ${animatedCheckbox} */
 `;
 
 export const Container = styled.div`
