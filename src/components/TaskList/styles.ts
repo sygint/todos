@@ -30,7 +30,6 @@ export const TaskContainer = styled.div`
   display: grid;
   grid-template-columns: min-content auto min-content min-content;
   gap: 0.5rem;
-  padding: 0.5rem;
   align-items: center;
 `;
 
@@ -76,6 +75,7 @@ export const Label = styled.label`
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  padding: 0.75rem 0;
 
   &:last-child {
     border-bottom: none;
