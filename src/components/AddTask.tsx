@@ -8,7 +8,7 @@ type AddTaskProps = {
   onAdd: (data: string) => void;
 };
 
-const AddTaskWrapper = styled.div`
+const AddTaskContainer = styled.div`
   padding: 1rem 0.5rem;
 `;
 
@@ -23,7 +23,7 @@ function AddTask({ onAdd }: AddTaskProps) {
   };
 
   return (
-    <AddTaskWrapper>
+    <AddTaskContainer>
       <Form onSubmit={handleSubmit}>
         <TextField
           id="addName"
@@ -34,7 +34,7 @@ function AddTask({ onAdd }: AddTaskProps) {
         />
         <Button className="button is-primary">Add</Button>
       </Form>
-    </AddTaskWrapper>
+    </AddTaskContainer>
   );
 }
 
