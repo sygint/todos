@@ -41,44 +41,46 @@ export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
   };
 
   return (
-    <TaskListContainer>
+    <>
       <ToDoSVGContainer />
-      {tasks.map((task: TaskObject) => {
-        const { id, title } = task;
+      <TaskListContainer>
+        {tasks.map((task: TaskObject) => {
+          const { id, title } = task;
 
-        return (
-          <TaskListItem key={id}>
-            {idToEdit === id ? (
-              <EditTask
-                key={id}
-                onEdit={(newTitle) =>
-                  handleEdit({
-                    id,
-                    key: "title",
-                    value: newTitle,
-                  })
-                }
-                value={title}
-                onCancel={handleCancel}
-              />
-            ) : (
-              <Task
-                key={id}
-                task={task}
-                onChangeStatus={(isCompleted) =>
-                  handleEdit({
-                    id,
-                    key: "isCompleted",
-                    value: isCompleted,
-                  })
-                }
-                onShowEdit={handleShowEdit}
-                onDelete={onDelete}
-              />
-            )}
-          </TaskListItem>
-        );
-      })}
-    </TaskListContainer>
+          return (
+            <TaskListItem key={id}>
+              {idToEdit === id ? (
+                <EditTask
+                  key={id}
+                  onEdit={(newTitle) =>
+                    handleEdit({
+                      id,
+                      key: "title",
+                      value: newTitle,
+                    })
+                  }
+                  value={title}
+                  onCancel={handleCancel}
+                />
+              ) : (
+                <Task
+                  key={id}
+                  task={task}
+                  onChangeStatus={(isCompleted) =>
+                    handleEdit({
+                      id,
+                      key: "isCompleted",
+                      value: isCompleted,
+                    })
+                  }
+                  onShowEdit={handleShowEdit}
+                  onDelete={onDelete}
+                />
+              )}
+            </TaskListItem>
+          );
+        })}
+      </TaskListContainer>
+    </>
   );
 }
