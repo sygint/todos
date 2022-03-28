@@ -1,4 +1,5 @@
 import { useState, FormEvent } from "react";
+import styled from "styled-components";
 
 import TextField from "./shared/TextField";
 import { Button, Form } from "./shared/styles";
@@ -8,6 +9,10 @@ type TEditTask = {
   value?: string | undefined;
   onCancel?: () => void;
 };
+
+const EditTaskForm = styled(Form)`
+  padding: 1rem 0;
+`;
 
 function EditTask({ onEdit, value, onCancel }: TEditTask) {
   const [taskName, setTaskName] = useState(value || "");
@@ -19,7 +24,7 @@ function EditTask({ onEdit, value, onCancel }: TEditTask) {
   };
 
   return (
-    <Form onSubmit={handleSubmit} hasCancel>
+    <EditTaskForm onSubmit={handleSubmit} hasCancel>
       <TextField
         id="editTask"
         label="Edit a task"
@@ -31,7 +36,7 @@ function EditTask({ onEdit, value, onCancel }: TEditTask) {
       <Button className="button" type="button" onClick={onCancel}>
         cancel
       </Button>
-    </Form>
+    </EditTaskForm>
   );
 }
 
