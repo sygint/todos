@@ -3,6 +3,9 @@ import styled from "styled-components";
 export const TaskListContainer = styled.ul`
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
+  margin-top: 0;
+  padding-left: 0;
+  list-style: none;
 `;
 
 export const TaskListItem = styled.li`
