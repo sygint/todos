@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, ChangeEvent } from "react";
 import { nanoid } from "nanoid";
 import { get, set } from "idb-keyval";
 
@@ -45,6 +45,23 @@ export default function App() {
     const tasksJsonString = await JSON.stringify(tasks, null, 2);
 
     downloadBlobAsFile(tasksJsonString, "export.txt");
+  };
+
+  const handleImport = (event: ChangeEvent<HTMLInputElement>) => {
+    const file = (event.currentTarget.files || [])[0];
+    const fileReader = new FileReader();
+
+    const handleFileRead = () => {
+      const content = fileReader.result as string;
+
+      if (content) {
+        const newTasks = JSON.parse(content);
+        saveTasks([...newTasks, ...tasks]);
+      }
+    };
+
+    fileReader.onloadend = handleFileRead;
+    fileReader.readAsText(file);
   };
 
   const handleAdd = (title: string) => {
@@ -106,7 +123,7 @@ export default function App() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
+          gridTemplateColumns: "repeat(3, 1fr)",
           gap: "0.5rem",
         }}
       >
@@ -116,6 +133,7 @@ export default function App() {
         <button type="button" onClick={exportTasks}>
           export
         </button>
+        <input type="file" id="input" onChange={handleImport} />
       </div>
       <AddTask onAdd={handleAdd} />
       {tasks.length ? (
