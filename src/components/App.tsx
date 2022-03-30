@@ -5,6 +5,7 @@ import { get, set } from "idb-keyval";
 import { decrypt, encrypt } from "../lib/crypto";
 import { downloadBlobAsFile } from "../lib/utils";
 import { Container, NoTasks } from "./styles";
+import { Button } from "./shared/styles";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
 
@@ -138,15 +139,9 @@ export default function App() {
           gap: "0.5rem",
         }}
       >
-        <button type="button" onClick={backupTasks}>
-          Backup
-        </button>
-        <button type="button" onClick={exportTasks}>
-          export
-        </button>
-        <button type="button" onClick={importTasks}>
-          import
-        </button>
+        <Button onClick={backupTasks}>Backup</Button>
+        <Button onClick={exportTasks}>Export</Button>
+        <Button onClick={importTasks}>Import</Button>
         <input
           type="file"
           // ref={importTaskRef}
