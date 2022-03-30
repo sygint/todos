@@ -1,4 +1,4 @@
-import { useEffect, useState, ChangeEvent } from "react";
+import { /* useRef, */ useEffect, useState, ChangeEvent } from "react";
 import { nanoid } from "nanoid";
 import { get, set } from "idb-keyval";
 
@@ -26,6 +26,8 @@ export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
 
+  // const importTaskRef = useRef(null);
+
   const saveTasks = async (tasksData: Task[]) => {
     const tasksJsonString = await JSON.stringify(tasksData);
     const encryptedTasks = await encrypt(tasksJsonString, password);
@@ -45,6 +47,15 @@ export default function App() {
     const tasksJsonString = await JSON.stringify(tasks, null, 2);
 
     downloadBlobAsFile(tasksJsonString, "export.txt");
+  };
+
+  const importTasks = () => {
+    // TODO: swap to using ref as that's more internal
+    const file = document.getElementById("input-file");
+
+    if (file) {
+      file.click();
+    }
   };
 
   const handleImport = (event: ChangeEvent<HTMLInputElement>) => {
@@ -133,7 +144,16 @@ export default function App() {
         <button type="button" onClick={exportTasks}>
           export
         </button>
-        <input type="file" id="input" onChange={handleImport} />
+        <button type="button" onClick={importTasks}>
+          import
+        </button>
+        <input
+          type="file"
+          // ref={importTaskRef}
+          id="input-file"
+          onChange={handleImport}
+          style={{ display: "none" }}
+        />
       </div>
       <AddTask onAdd={handleAdd} />
       {tasks.length ? (
