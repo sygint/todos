@@ -12,7 +12,7 @@ const AddTaskForm = styled(Form)`
   padding: 1rem 0.5rem;
 `;
 
-function AddTask({ onAdd }: AddTaskProps) {
+export default function AddTask({ onAdd }: AddTaskProps) {
   const [newTask, setNewTask] = useState("");
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
@@ -35,5 +35,3 @@ function AddTask({ onAdd }: AddTaskProps) {
     </AddTaskForm>
   );
 }
-
-export default AddTask;

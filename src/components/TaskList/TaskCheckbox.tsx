@@ -10,7 +10,7 @@ type TaskCheckboxProps = {
   onChange: (isChecked: boolean) => void;
 };
 
-function TaskCheckbox({
+export default function TaskCheckbox({
   id,
   label,
   isChecked = false,
@@ -35,5 +35,3 @@ function TaskCheckbox({
     </>
   );
 }
-
-export default TaskCheckbox;

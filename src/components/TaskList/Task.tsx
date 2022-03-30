@@ -17,7 +17,12 @@ type TaskProps = {
   onDelete: (id: string) => void;
 };
 
-function Task({ task, onChangeStatus, onShowEdit, onDelete }: TaskProps) {
+export default function Task({
+  task,
+  onChangeStatus,
+  onShowEdit,
+  onDelete,
+}: TaskProps) {
   const handleChange = (isChecked: boolean) => {
     onChangeStatus(isChecked);
   };
@@ -41,5 +46,3 @@ function Task({ task, onChangeStatus, onShowEdit, onDelete }: TaskProps) {
     </TaskContainer>
   );
 }
-
-export default Task;
