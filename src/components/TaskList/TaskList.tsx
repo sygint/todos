@@ -1,15 +1,9 @@
 import { useState } from "react";
 
 import EditTask from "../EditTask";
-import Task from "./Task";
+import Task, { Props as TaskProps, TaskObject } from "./Task";
 import { TaskListContainer, TaskListItem } from "./styles";
 // import { ReactComponent as ToDoSVGContainer } from "../../assets/todo-container.svg";
-
-export type TaskObject = {
-  id: string;
-  title: string;
-  isCompleted: boolean;
-};
 
 type OnEditOptions = {
   id: string;
@@ -17,10 +11,9 @@ type OnEditOptions = {
   value: string | boolean;
 };
 
-type Props = {
+type Props = Omit<TaskProps, "task" | "onChangeStatus" | "onShowEdit"> & {
   tasks: TaskObject[];
   onEdit: (options: OnEditOptions) => void;
-  onDelete: (id: string) => void;
 };
 
 export default function TaskList({ tasks, onEdit, onDelete }: Props) {

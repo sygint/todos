@@ -4,13 +4,13 @@ import TaskCheckbox from "./TaskCheckbox";
 import { IconButton } from "../shared/styles";
 import { TaskContainer } from "./styles";
 
-type TaskObject = {
+export type TaskObject = {
   id: string;
   title: string;
   isCompleted: boolean;
 };
 
-type Props = {
+export type Props = {
   task: TaskObject;
   onChangeStatus: (isCompleted: boolean) => void;
   onShowEdit: (id: string) => void;
