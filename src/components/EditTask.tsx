@@ -4,7 +4,7 @@ import styled from "styled-components";
 import TextField from "./shared/TextField";
 import { Button, Form } from "./shared/styles";
 
-type TEditTask = {
+type Props = {
   onEdit: (data: string) => void;
   value?: string | undefined;
   onCancel?: () => void;
@@ -14,7 +14,7 @@ const EditTaskForm = styled(Form)`
   padding: 1rem 0;
 `;
 
-function EditTask({ onEdit, value, onCancel }: TEditTask) {
+function EditTask({ onEdit, value, onCancel }: Props) {
   const [taskName, setTaskName] = useState(value || "");
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {

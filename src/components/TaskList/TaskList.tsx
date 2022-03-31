@@ -3,8 +3,7 @@ import { useState } from "react";
 import EditTask from "../EditTask";
 import Task from "./Task";
 import { TaskListContainer, TaskListItem } from "./styles";
-
-import { ReactComponent as ToDoSVGContainer } from "../../assets/todo-container.svg";
+// import { ReactComponent as ToDoSVGContainer } from "../../assets/todo-container.svg";
 
 export type TaskObject = {
   id: string;
@@ -42,7 +41,7 @@ export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
 
   return (
     <>
-      <ToDoSVGContainer />
+      {/* <ToDoSVGContainer /> */}
       <TaskListContainer>
         {tasks.map((task: TaskObject) => {
           const { id, title } = task;
