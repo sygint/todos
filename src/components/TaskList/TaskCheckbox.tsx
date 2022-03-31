@@ -3,7 +3,7 @@ import { ChangeEvent } from "react";
 import { /* TaskText, */ Label, Checkbox } from "./styles";
 // import { ReactComponent as ToDoCheckboxSVG } from "../../assets/todo-checkbox.svg";
 
-type TaskCheckboxProps = {
+type Props = {
   id: string;
   label: string;
   isChecked: boolean;
@@ -15,7 +15,7 @@ export default function TaskCheckbox({
   label,
   isChecked = false,
   onChange,
-}: TaskCheckboxProps) {
+}: Props) {
   return (
     <>
       <Checkbox

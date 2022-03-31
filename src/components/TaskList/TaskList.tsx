@@ -17,13 +17,13 @@ type OnEditOptions = {
   value: string | boolean;
 };
 
-type TaskListProps = {
+type Props = {
   tasks: TaskObject[];
   onEdit: (options: OnEditOptions) => void;
   onDelete: (id: string) => void;
 };
 
-export default function TaskList({ tasks, onEdit, onDelete }: TaskListProps) {
+export default function TaskList({ tasks, onEdit, onDelete }: Props) {
   const [idToEdit, setIdToEdit] = useState<string>("");
 
   const handleShowEdit = (id: string) => {

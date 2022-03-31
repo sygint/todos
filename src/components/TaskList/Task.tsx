@@ -10,7 +10,7 @@ type TaskObject = {
   isCompleted: boolean;
 };
 
-type TaskProps = {
+type Props = {
   task: TaskObject;
   onChangeStatus: (isCompleted: boolean) => void;
   onShowEdit: (id: string) => void;
@@ -22,7 +22,7 @@ export default function Task({
   onChangeStatus,
   onShowEdit,
   onDelete,
-}: TaskProps) {
+}: Props) {
   const handleChange = (isChecked: boolean) => {
     onChangeStatus(isChecked);
   };

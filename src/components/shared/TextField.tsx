@@ -1,6 +1,6 @@
 import { ChangeEvent } from "react";
 
-type TextFieldProps = {
+type Props = {
   label: string;
   placeholder?: string;
   id: string;
@@ -8,13 +8,7 @@ type TextFieldProps = {
   onChange: (value: string) => void;
 };
 
-function TextField({
-  label,
-  id,
-  placeholder,
-  value,
-  onChange,
-}: TextFieldProps) {
+function TextField({ label, id, placeholder, value, onChange }: Props) {
   const handleOnChange = (event: ChangeEvent<HTMLInputElement>) =>
     onChange(event.currentTarget.value);
 
