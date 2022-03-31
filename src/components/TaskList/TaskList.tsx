@@ -39,36 +39,40 @@ export default function TaskList({ tasks, onEdit, onDelete }: Props) {
         {tasks.map((task: TaskObject) => {
           const { id, title } = task;
 
+          const renderEditTask = () => (
+            <EditTask
+              key={id}
+              onEdit={(newTitle) =>
+                handleEdit({
+                  id,
+                  key: "title",
+                  value: newTitle,
+                })
+              }
+              value={title}
+              onCancel={handleCancel}
+            />
+          );
+
+          const renderTask = () => (
+            <Task
+              key={id}
+              task={task}
+              onChangeStatus={(isCompleted) =>
+                handleEdit({
+                  id,
+                  key: "isCompleted",
+                  value: isCompleted,
+                })
+              }
+              onShowEdit={handleShowEdit}
+              onDelete={onDelete}
+            />
+          );
+
           return (
             <TaskListItem key={id}>
-              {idToEdit === id ? (
-                <EditTask
-                  key={id}
-                  onEdit={(newTitle) =>
-                    handleEdit({
-                      id,
-                      key: "title",
-                      value: newTitle,
-                    })
-                  }
-                  value={title}
-                  onCancel={handleCancel}
-                />
-              ) : (
-                <Task
-                  key={id}
-                  task={task}
-                  onChangeStatus={(isCompleted) =>
-                    handleEdit({
-                      id,
-                      key: "isCompleted",
-                      value: isCompleted,
-                    })
-                  }
-                  onShowEdit={handleShowEdit}
-                  onDelete={onDelete}
-                />
-              )}
+              {idToEdit === id ? renderEditTask() : renderTask()}
             </TaskListItem>
           );
         })}
