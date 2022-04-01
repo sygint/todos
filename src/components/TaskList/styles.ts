@@ -8,7 +8,12 @@ export const TaskListContainer = styled.ul`
   list-style: none;
 `;
 
-export const TaskListItem = styled.li`
+export const TaskContainer = styled.li`
+  position: relative;
+  display: grid;
+  grid-template-columns: min-content auto min-content min-content;
+  gap: 0.5rem;
+  align-items: center;
   border-bottom: 1px solid #ccc;
 
   &:last-child {
@@ -21,14 +26,6 @@ export const TaskListItem = styled.li`
       visibility: visible;
     }
   }
-`;
-
-export const TaskContainer = styled.div`
-  position: relative;
-  display: grid;
-  grid-template-columns: min-content auto min-content min-content;
-  gap: 0.5rem;
-  align-items: center;
 `;
 
 export const Checkbox = styled.input`

@@ -2,7 +2,7 @@ import { useState } from "react";
 
 import EditTask from "../EditTask";
 import Task, { Props as TaskProps, TaskObject } from "./Task";
-import { TaskListContainer, TaskListItem } from "./styles";
+import { TaskListContainer } from "./styles";
 // import { ReactComponent as ToDoSVGContainer } from "../../assets/todo-container.svg";
 
 type OnEditOptions = {
@@ -70,11 +70,7 @@ export default function TaskList({ tasks, onEdit, onDelete }: Props) {
             />
           );
 
-          return (
-            <TaskListItem key={id}>
-              {idToEdit === id ? renderEditTask() : renderTask()}
-            </TaskListItem>
-          );
+          return idToEdit === id ? renderEditTask() : renderTask();
         })}
       </TaskListContainer>
     </>

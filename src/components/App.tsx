@@ -6,6 +6,7 @@ import { decrypt, encrypt } from "../lib/crypto";
 import { downloadBlobAsFile } from "../lib/utils";
 import { Container, NoTasks } from "./styles";
 import { Button } from "./shared/styles";
+import Checkbox from "./shared/Checkbox";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
 
@@ -21,11 +22,17 @@ export type Task = {
   isCompleted: boolean;
 };
 
+enum SortBy {
+  None,
+  Status,
+}
+
 const password = "password";
 
 export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
+  const [sortBy, setSortBy] = useState<SortBy>(SortBy.None);
 
   // const importTaskRef = useRef(null);
 
@@ -108,6 +115,14 @@ export default function App() {
     saveTasks(newTasks);
   };
 
+  const handleChangeSortByStatus = (isChecked: boolean) => {
+    if (isChecked) {
+      setSortBy(SortBy.Status);
+    } else {
+      setSortBy(SortBy.None);
+    }
+  };
+
   useEffect(() => {
     async function init() {
       try {
@@ -150,9 +165,39 @@ export default function App() {
           style={{ display: "none" }}
         />
       </div>
+      <div
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(3, 1fr)",
+          gap: "0.5rem",
+        }}
+      >
+        <Checkbox
+          id="sort-by-status"
+          label="Sort by status"
+          isChecked={sortBy === SortBy.Status}
+          onChange={handleChangeSortByStatus}
+        />
+      </div>
       <AddTask onAdd={handleAdd} />
       {tasks.length ? (
-        <TaskList tasks={tasks} onEdit={handleEdit} onDelete={handleDelete} />
+        <>
+          <TaskList
+            tasks={sortBy ? tasks.filter((t) => !t.isCompleted) : tasks}
+            onEdit={handleEdit}
+            onDelete={handleDelete}
+          />
+          {sortBy && (
+            <>
+              <h2>Completed</h2>
+              <TaskList
+                tasks={sortBy ? tasks.filter((t) => t.isCompleted) : tasks}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+              />
+            </>
+          )}
+        </>
       ) : (
         noTasks
       )}
