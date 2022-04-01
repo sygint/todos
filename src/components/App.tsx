@@ -33,6 +33,7 @@ export default function App() {
   const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
   const [sortBy, setSortBy] = useState<SortBy>(SortBy.None);
+  const [hideCompleted, setHideCompleted] = useState(false);
 
   // const importTaskRef = useRef(null);
 
@@ -123,6 +124,10 @@ export default function App() {
     }
   };
 
+  const handleHideCompleted = (isChecked: boolean) => {
+    setHideCompleted(isChecked);
+  };
+
   useEffect(() => {
     async function init() {
       try {
@@ -168,7 +173,7 @@ export default function App() {
       <div
         style={{
           display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
+          gridTemplateColumns: "repeat(2, 1fr)",
           gap: "0.5rem",
         }}
       >
@@ -178,16 +183,26 @@ export default function App() {
           isChecked={sortBy === SortBy.Status}
           onChange={handleChangeSortByStatus}
         />
+        <Checkbox
+          id="hide-complete"
+          label="Hide complete"
+          isChecked={hideCompleted}
+          onChange={handleHideCompleted}
+        />
       </div>
       <AddTask onAdd={handleAdd} />
       {tasks.length ? (
         <>
           <TaskList
-            tasks={sortBy ? tasks.filter((t) => !t.isCompleted) : tasks}
+            tasks={
+              sortBy || hideCompleted
+                ? tasks.filter((t) => !t.isCompleted)
+                : tasks
+            }
             onEdit={handleEdit}
             onDelete={handleDelete}
           />
-          {sortBy && (
+          {sortBy && !hideCompleted ? (
             <>
               <h2>Completed</h2>
               <TaskList
@@ -196,7 +211,7 @@ export default function App() {
                 onDelete={handleDelete}
               />
             </>
-          )}
+          ) : null}
         </>
       ) : (
         noTasks
