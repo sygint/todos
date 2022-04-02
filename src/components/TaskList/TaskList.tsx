@@ -5,15 +5,9 @@ import Task, { Props as TaskProps, TaskObject } from "./Task";
 import { TaskListContainer } from "./styles";
 // import { ReactComponent as ToDoSVGContainer } from "../../assets/todo-container.svg";
 
-type OnEditOptions = {
-  id: string;
-  key: string;
-  value: string | boolean;
-};
-
 type Props = Omit<TaskProps, "task" | "onChangeStatus" | "onShowEdit"> & {
   tasks: TaskObject[];
-  onEdit: (options: OnEditOptions) => void;
+  onEdit: (task: TaskObject) => void;
 };
 
 export default function TaskList({ tasks, onEdit, onDelete }: Props) {
@@ -23,8 +17,8 @@ export default function TaskList({ tasks, onEdit, onDelete }: Props) {
     setIdToEdit(id);
   };
 
-  const handleEdit = ({ id, key, value }: OnEditOptions) => {
-    onEdit({ id, key, value });
+  const handleEdit = (task: TaskObject) => {
+    onEdit(task);
     setIdToEdit("");
   };
 
@@ -42,13 +36,7 @@ export default function TaskList({ tasks, onEdit, onDelete }: Props) {
           const renderEditTask = () => (
             <EditTask
               key={id}
-              onEdit={(newTitle) =>
-                handleEdit({
-                  id,
-                  key: "title",
-                  value: newTitle,
-                })
-              }
+              onEdit={(newTitle) => handleEdit({ ...task, title: newTitle })}
               value={title}
               onCancel={handleCancel}
             />
@@ -59,11 +47,7 @@ export default function TaskList({ tasks, onEdit, onDelete }: Props) {
               key={id}
               task={task}
               onChangeStatus={(isCompleted) =>
-                handleEdit({
-                  id,
-                  key: "isCompleted",
-                  value: isCompleted,
-                })
+                handleEdit({ ...task, isCompleted })
               }
               onShowEdit={handleShowEdit}
               onDelete={onDelete}

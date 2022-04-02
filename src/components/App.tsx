@@ -10,12 +10,6 @@ import Checkbox from "./shared/Checkbox";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
 
-type OnEditOptions = {
-  id: string;
-  key: string;
-  value: string | boolean;
-};
-
 export type Task = {
   id: string;
   title: string;
@@ -102,9 +96,9 @@ export default function App() {
     saveTasks(newTasks);
   };
 
-  const handleEdit = ({ id, key, value }: OnEditOptions) => {
+  const handleEdit = (task: Task) => {
     const newTasks = tasks.map((t) =>
-      t.id === id ? { ...t, [key]: value } : t,
+      t.id === task.id ? { ...t, ...task } : t,
     );
 
     saveTasks(newTasks);
