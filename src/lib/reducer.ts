@@ -1,8 +1,4 @@
-type Task = {
-  id: string;
-  title: string;
-  isCompleted: boolean;
-};
+import { TaskObject as Task } from "../components/TaskList/Task";
 
 // Task Actions
 enum TaskActionType {

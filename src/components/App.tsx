@@ -23,12 +23,7 @@ import { Button } from "./shared/styles";
 import Checkbox from "./shared/Checkbox";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
-
-export type Task = {
-  id: string;
-  title: string;
-  isCompleted: boolean;
-};
+import { TaskObject as Task } from "./TaskList/Task";
 
 const password = "password";
 
