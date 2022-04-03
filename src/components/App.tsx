@@ -1,8 +1,22 @@
-import { /* useRef, */ useEffect, useState, ChangeEvent } from "react";
+import {
+  /* useRef, */
+  useState,
+  useReducer,
+  useEffect,
+  ChangeEvent,
+} from "react";
 import { nanoid } from "nanoid";
 import { get, set } from "idb-keyval";
 
 import { decrypt, encrypt } from "../lib/crypto";
+import {
+  reducer,
+  initialState,
+  State,
+  ActionTypes,
+  SortByActionPayload,
+  HideActionPayload,
+} from "../lib/reducer";
 import { downloadBlobAsFile } from "../lib/utils";
 import { Container, NoTasks } from "./styles";
 import { Button } from "./shared/styles";
@@ -16,27 +30,27 @@ export type Task = {
   isCompleted: boolean;
 };
 
-enum SortBy {
-  None,
-  Status,
-}
-
 const password = "password";
 
 export default function App() {
-  const [tasks, setTasks] = useState<Task[]>([]);
   const [isLoaded, setIsLoaded] = useState(false);
-  const [sortBy, setSortBy] = useState<SortBy>(SortBy.None);
-  const [hideCompleted, setHideCompleted] = useState(false);
+  const [state, dispatch] = useReducer(reducer, initialState);
+  const {
+    tasks,
+    settings: { sortBy, hide },
+  } = state;
 
   // const importTaskRef = useRef(null);
 
-  const saveTasks = async (tasksData: Task[]) => {
-    const tasksJsonString = await JSON.stringify(tasksData);
-    const encryptedTasks = await encrypt(tasksJsonString, password);
+  const saveState = async () => {
+    const stateJson = await JSON.stringify(state);
+    const stateCiphertext = await encrypt(stateJson, password);
 
-    set("tasks", encryptedTasks);
-    setTasks(tasksData);
+    set("state", stateCiphertext);
+  };
+
+  const loadState = (payload: State) => {
+    dispatch({ type: ActionTypes.LOAD_STATE, payload });
   };
 
   const backupTasks = async () => {
@@ -69,8 +83,8 @@ export default function App() {
       const content = fileReader.result as string;
 
       if (content) {
-        const newTasks = JSON.parse(content);
-        saveTasks([...newTasks, ...tasks]);
+        const payload = JSON.parse(content);
+        dispatch({ type: ActionTypes.APPEND_TASKS, payload });
       }
     };
 
@@ -84,53 +98,61 @@ export default function App() {
       alert("Enter a task to add");
     }
 
-    const newTasks = [
-      {
-        id: nanoid(),
-        title,
-        isCompleted: false,
-      },
-      ...tasks,
-    ];
+    const payload = {
+      id: nanoid(),
+      title,
+      isCompleted: false,
+    };
 
-    saveTasks(newTasks);
+    dispatch({ type: ActionTypes.ADD_TASK, payload });
   };
 
   const handleEdit = (task: Task) => {
-    const newTasks = tasks.map((t) =>
-      t.id === task.id ? { ...t, ...task } : t,
-    );
-
-    saveTasks(newTasks);
+    dispatch({ type: ActionTypes.EDIT_TASK, payload: task });
   };
 
   const handleDelete = (id: string) => {
-    const newTasks = tasks.filter((t) => t.id !== id);
-
-    saveTasks(newTasks);
+    dispatch({ type: ActionTypes.DELETE_TASK, payload: id });
   };
 
   const handleChangeSortByStatus = (isChecked: boolean) => {
     if (isChecked) {
-      setSortBy(SortBy.Status);
+      dispatch({
+        type: ActionTypes.SORT_BY,
+        payload: SortByActionPayload.Status,
+      });
     } else {
-      setSortBy(SortBy.None);
+      dispatch({
+        type: ActionTypes.SORT_BY,
+        payload: SortByActionPayload.None,
+      });
     }
   };
 
   const handleHideCompleted = (isChecked: boolean) => {
-    setHideCompleted(isChecked);
+    if (isChecked) {
+      dispatch({
+        type: ActionTypes.HIDE,
+        payload: HideActionPayload.Completed,
+      });
+    } else {
+      dispatch({
+        type: ActionTypes.HIDE,
+        payload: HideActionPayload.None,
+      });
+    }
   };
 
+  // initialize
   useEffect(() => {
     async function init() {
       try {
-        const encryptedTasks = await get("tasks");
+        const encryptedState = await get("state");
 
-        if (encryptedTasks) {
-          const decryptedTasksJson = await decrypt(encryptedTasks, password);
-          const decryptedTasks = await JSON.parse(decryptedTasksJson);
-          setTasks(decryptedTasks);
+        if (encryptedState) {
+          const decryptedStateJson = await decrypt(encryptedState, password);
+          const decryptedState = await JSON.parse(decryptedStateJson);
+          loadState(decryptedState);
         }
 
         setIsLoaded(true);
@@ -141,6 +163,10 @@ export default function App() {
     }
     init();
   }, []);
+
+  useEffect(() => {
+    saveState();
+  }, [state]);
 
   const noTasks = isLoaded ? <NoTasks>No tasks, add some.</NoTasks> : null;
 
@@ -174,13 +200,13 @@ export default function App() {
         <Checkbox
           id="sort-by-status"
           label="Sort by status"
-          isChecked={sortBy === SortBy.Status}
+          isChecked={sortBy === SortByActionPayload.Status}
           onChange={handleChangeSortByStatus}
         />
         <Checkbox
           id="hide-complete"
           label="Hide complete"
-          isChecked={hideCompleted}
+          isChecked={hide === HideActionPayload.Completed}
           onChange={handleHideCompleted}
         />
       </div>
@@ -189,18 +215,22 @@ export default function App() {
         <>
           <TaskList
             tasks={
-              sortBy || hideCompleted
-                ? tasks.filter((t) => !t.isCompleted)
+              sortBy === SortByActionPayload.Status ||
+              hide === HideActionPayload.Completed
+                ? tasks.filter((t: Task) => !t.isCompleted)
                 : tasks
             }
             onEdit={handleEdit}
             onDelete={handleDelete}
           />
-          {sortBy && !hideCompleted ? (
+          {sortBy === SortByActionPayload.Status &&
+          hide !== HideActionPayload.Completed ? (
             <>
               <h2>Completed</h2>
               <TaskList
-                tasks={sortBy ? tasks.filter((t) => t.isCompleted) : tasks}
+                tasks={
+                  sortBy ? tasks.filter((t: Task) => t.isCompleted) : tasks
+                }
                 onEdit={handleEdit}
                 onDelete={handleDelete}
               />
