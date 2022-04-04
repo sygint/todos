@@ -33,7 +33,7 @@ export default function App() {
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     tasks,
-    settings: { sortBy, hide },
+    settings: { sortBy, hide, confirmDelete },
   } = state;
 
   // const importTaskRef = useRef(null);
@@ -108,6 +108,10 @@ export default function App() {
   };
 
   const handleDelete = (id: string) => {
+    if (confirmDelete && !window.confirm("Are you sure?")) {
+      return;
+    }
+
     dispatch({ type: ActionTypes.DELETE_TASK, payload: id });
   };
 
@@ -137,6 +141,13 @@ export default function App() {
         payload: HideActionPayload.None,
       });
     }
+  };
+
+  const handleChangeConfirmDelete = (isChecked: boolean) => {
+    dispatch({
+      type: ActionTypes.CONFIRM_DELETE,
+      payload: isChecked,
+    });
   };
 
   // initialize
@@ -194,6 +205,12 @@ export default function App() {
                 label="Hide complete"
                 isChecked={hide === HideActionPayload.Completed}
                 onChange={handleHideCompleted}
+              />
+              <Checkbox
+                id="confirmDelete"
+                label="Confirm delete"
+                isChecked={confirmDelete}
+                onChange={handleChangeConfirmDelete}
               />
             </>
           }

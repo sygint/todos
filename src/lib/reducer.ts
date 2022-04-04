@@ -66,6 +66,17 @@ type Hide = {
 
 type HideAction = Hide;
 
+// Confirm Delete Actions
+
+enum ConfirmDeleteActionType {
+  CONFIRM_DELETE = "CONFIRM_DELETE",
+}
+
+type ConfirmDelete = {
+  type: ConfirmDeleteActionType;
+  payload: boolean;
+};
+
 // State Actions
 
 enum StateActionType {
@@ -81,13 +92,19 @@ type LoadState = {
 
 type StateAction = LoadState;
 
-type Action = TaskAction | SortByAction | HideAction | StateAction;
+type Action =
+  | TaskAction
+  | SortByAction
+  | HideAction
+  | ConfirmDelete
+  | StateAction;
 
 export const ActionTypes = {
   ...StateActionType,
   ...TaskActionType,
   ...SortByActionType,
   ...HideActionType,
+  ...ConfirmDeleteActionType,
 };
 
 // App state management
@@ -97,6 +114,7 @@ export type State = {
   settings: {
     sortBy: SortByActionPayload;
     hide: HideActionPayload;
+    confirmDelete: boolean;
   };
 };
 
@@ -105,6 +123,7 @@ export const initialState: State = {
   settings: {
     sortBy: SortByActionPayload.None,
     hide: HideActionPayload.None,
+    confirmDelete: false,
   },
 };
 
@@ -141,6 +160,13 @@ export const reducer = (state: State, action: Action) => {
     // Hide Actions
     case ActionTypes.HIDE:
       return { ...state, settings: { ...state.settings, hide: payload } };
+
+    // ConfirmDelete Actions
+    case ActionTypes.CONFIRM_DELETE:
+      return {
+        ...state,
+        settings: { ...state.settings, confirmDelete: payload },
+      };
 
     // State Actions
     case ActionTypes.LOAD_STATE:

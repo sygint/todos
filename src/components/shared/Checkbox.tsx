@@ -23,7 +23,7 @@ export default function Checkbox({
         onChange={(event: ChangeEvent<HTMLInputElement>) =>
           onChange(event.target.checked)
         }
-        defaultChecked={isChecked}
+        checked={isChecked}
       />{" "}
       <Label htmlFor={id} /* data-content={label} */>
         {/* <ToDoCheckboxSVG /> */}
