@@ -21,6 +21,7 @@ import { downloadBlobAsFile } from "../lib/utils";
 import { Container, NoTasks } from "./styles";
 import { Button } from "./shared/styles";
 import Checkbox from "./shared/Checkbox";
+import Dropdown from "./shared/Dropdown";
 import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
 import { TaskObject as Task } from "./TaskList/Task";
@@ -167,42 +168,35 @@ export default function App() {
 
   return (
     <Container>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(3, 1fr)",
-          gap: "0.5rem",
-        }}
-      >
-        <Button onClick={backupTasks}>Backup</Button>
-        <Button onClick={exportTasks}>Export</Button>
-        <Button onClick={importTasks}>Import</Button>
-        <input
-          type="file"
-          // ref={importTaskRef}
-          id="input-file"
-          onChange={handleImport}
-          style={{ display: "none" }}
-        />
-      </div>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(2, 1fr)",
-          gap: "0.5rem",
-        }}
-      >
-        <Checkbox
-          id="sort-by-status"
-          label="Sort by status"
-          isChecked={sortBy === SortByActionPayload.Status}
-          onChange={handleChangeSortByStatus}
-        />
-        <Checkbox
-          id="hide-complete"
-          label="Hide complete"
-          isChecked={hide === HideActionPayload.Completed}
-          onChange={handleHideCompleted}
+      <div style={{ display: "flex", justifyContent: "flex-end" }}>
+        <Dropdown
+          menuText="Menu"
+          content={
+            <>
+              <Button onClick={backupTasks}>Backup</Button>
+              <Button onClick={exportTasks}>Export</Button>
+              <Button onClick={importTasks}>Import</Button>
+              <input
+                type="file"
+                // ref={importTaskRef}
+                id="input-file"
+                onChange={handleImport}
+                style={{ display: "none" }}
+              />
+              <Checkbox
+                id="sort-by-status"
+                label="Sort by status"
+                isChecked={sortBy === SortByActionPayload.Status}
+                onChange={handleChangeSortByStatus}
+              />
+              <Checkbox
+                id="hide-complete"
+                label="Hide complete"
+                isChecked={hide === HideActionPayload.Completed}
+                onChange={handleHideCompleted}
+              />
+            </>
+          }
         />
       </div>
       <AddTask onAdd={handleAdd} />
