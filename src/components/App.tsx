@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+
 import {
   /* useRef, */
   useState,
@@ -12,7 +14,6 @@ import { decrypt, encrypt } from "../lib/crypto";
 import {
   reducer,
   initialState,
-  State,
   ActionTypes,
   SortByActionPayload,
   HideActionPayload,
@@ -26,7 +27,10 @@ import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
 import { TaskObject as Task } from "./TaskList/Task";
 
-const password = "password";
+const passphrase =
+  window.prompt(
+    "Enter passphrase:\n\nempty passphrase defaults to 'password'\nif new, this will set a password for you",
+  ) || "password";
 
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
@@ -40,18 +44,21 @@ export default function App() {
 
   const saveState = async () => {
     const stateJson = await JSON.stringify(state);
-    const stateCiphertext = await encrypt(stateJson, password);
+    const stateCiphertext = await encrypt(stateJson, passphrase);
 
     set("state", stateCiphertext);
   };
 
-  const loadState = (payload: State) => {
-    dispatch({ type: ActionTypes.LOAD_STATE, payload });
+  const loadState = async (encryptedState: string) => {
+    const decryptedStateJson = await decrypt(encryptedState, passphrase);
+    const decryptedState = await JSON.parse(decryptedStateJson);
+
+    dispatch({ type: ActionTypes.LOAD_STATE, payload: decryptedState });
   };
 
   const backupTasks = async () => {
     const tasksJsonString = await JSON.stringify(tasks);
-    const encryptedTasks = await encrypt(tasksJsonString, password);
+    const encryptedTasks = await encrypt(tasksJsonString, passphrase);
 
     downloadBlobAsFile(encryptedTasks, "backup.txt");
   };
@@ -90,7 +97,6 @@ export default function App() {
 
   const handleAdd = (title: string) => {
     if (!title) {
-      /* eslint-disable no-alert */
       alert("Enter a task to add");
     }
 
@@ -157,9 +163,7 @@ export default function App() {
         const encryptedState = await get("state");
 
         if (encryptedState) {
-          const decryptedStateJson = await decrypt(encryptedState, password);
-          const decryptedState = await JSON.parse(decryptedStateJson);
-          loadState(decryptedState);
+          loadState(encryptedState);
         }
 
         setIsLoaded(true);
