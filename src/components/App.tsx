@@ -98,6 +98,7 @@ export default function App() {
   const handleAdd = (title: string) => {
     if (!title) {
       alert("Enter a task to add");
+      return;
     }
 
     const payload = {
