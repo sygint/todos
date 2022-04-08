@@ -14,6 +14,7 @@ import { decrypt, encrypt } from "../lib/crypto";
 import {
   reducer,
   initialState,
+  actions,
   ActionTypes,
   SortByActionPayload,
   HideActionPayload,
@@ -75,7 +76,7 @@ export default function App() {
     const decryptedStateJson = await decrypt(encryptedState, passphrase);
     const decryptedState = await JSON.parse(decryptedStateJson);
 
-    dispatch({ type: ActionTypes.LOAD_STATE, payload: decryptedState });
+    dispatch(actions.loadState(decryptedState));
   };
 
   const backupTasks = async () => {

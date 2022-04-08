@@ -107,6 +107,13 @@ export const ActionTypes = {
   ...ConfirmDeleteActionType,
 };
 
+export const actions = {
+  loadState: (state: State) => ({
+    type: StateActionType.LOAD_STATE,
+    payload: state,
+  }),
+};
+
 // App state management
 
 export type State = {
