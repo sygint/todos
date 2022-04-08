@@ -121,9 +121,9 @@ export type State = {
 export const initialState: State = {
   tasks: [],
   settings: {
-    sortBy: SortByActionPayload.None,
+    sortBy: SortByActionPayload.Status,
     hide: HideActionPayload.None,
-    confirmDelete: false,
+    confirmDelete: true,
   },
 };
 
