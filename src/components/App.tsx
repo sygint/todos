@@ -27,13 +27,9 @@ import AddTask from "./AddTask";
 import TaskList from "./TaskList/TaskList";
 import { TaskObject as Task } from "./TaskList/Task";
 
-const passphrase =
-  window.prompt(
-    "Enter passphrase:\n\nempty passphrase defaults to 'password'\nif new, this will set a password for you",
-  ) || "password";
-
 export default function App() {
   const [isLoaded, setIsLoaded] = useState(false);
+  const [passphrase, setPassphrase] = useState("");
   const [state, dispatch] = useReducer(reducer, initialState);
   const {
     tasks,
@@ -41,6 +37,32 @@ export default function App() {
   } = state;
 
   // const importTaskRef = useRef(null);
+
+  const getPassphrase = async () => {
+    let passphraseText = "";
+
+    try {
+      const passphraseFromIdb = await get("passphrase");
+
+      if (!passphraseFromIdb) {
+        passphraseText =
+          window.prompt(
+            "Enter passphrase:\n\nempty passphrase defaults to 'password'\nif new, this will set a password for you",
+          ) || "password";
+
+        if (window.confirm("Store this passphrase?")) {
+          set("passphrase", passphraseText);
+        }
+      } else {
+        passphraseText = passphraseFromIdb;
+      }
+    } catch (e) {
+      /* eslint-disable no-console */
+      console.error(e);
+    }
+
+    return passphraseText;
+  };
 
   const saveState = async () => {
     const stateJson = await JSON.stringify(state);
@@ -157,17 +179,15 @@ export default function App() {
     });
   };
 
-  // initialize
+  // get passphrase
   useEffect(() => {
     async function init() {
       try {
-        const encryptedState = await get("state");
+        if (!passphrase) {
+          const passphraseFromIdb = await getPassphrase();
 
-        if (encryptedState) {
-          loadState(encryptedState);
+          setPassphrase(passphraseFromIdb);
         }
-
-        setIsLoaded(true);
       } catch (e) {
         /* eslint-disable no-console */
         console.error(e);
@@ -176,8 +196,31 @@ export default function App() {
     init();
   }, []);
 
+  // get state
   useEffect(() => {
-    saveState();
+    async function load() {
+      try {
+        const encryptedState = await get("state");
+
+        if (!isLoaded) {
+          if (encryptedState && passphrase) {
+            loadState(encryptedState);
+          }
+          setIsLoaded(true);
+        }
+      } catch (e) {
+        /* eslint-disable no-console */
+        console.error(e);
+      }
+    }
+    load();
+  }, [passphrase]);
+
+  // save changed state
+  useEffect(() => {
+    if (isLoaded) {
+      saveState();
+    }
   }, [state]);
 
   const noTasks = isLoaded ? <NoTasks>No tasks, add some.</NoTasks> : null;
